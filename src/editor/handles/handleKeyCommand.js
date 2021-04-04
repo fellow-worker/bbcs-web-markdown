@@ -1,5 +1,8 @@
-import {  RichUtils, EditorState, Modifier  } from 'draft-js';
+import {  RichUtils  } from 'draft-js';
 import { handleSplitBlockCommand } from './splitBlock';
+import { removeEntity, getCurrentBlock, getCurrentEntity } from '../../util/draftjs'
+
+const inlineTypes = [ 'IMAGE', 'YOUTUBE'];
 
 export const handleKeyCommand = (command, editorState) => {
     switch(command) {
@@ -10,16 +13,13 @@ export const handleKeyCommand = (command, editorState) => {
 }
 
 const handleBackspace = (editorState) => {
-    const selection = editorState.getSelection()
-    if (selection.getHasFocus() === false) return RichUtils.handleKeyCommand(editorState, "backspace" );
 
-    const startKey = selection.getStartKey();
-    const startOffset = selection.getStartOffset();
-    const endKey = selection.getEndKey()
-    const endOffset = selection.getEndOffset()
+    const currentBlock = getCurrentBlock(editorState);
+    const { entity, key } = getCurrentEntity(editorState);
 
-    if (startKey === endKey && startOffset === endOffset) return RichUtils.handleKeyCommand(editorState, "backspace" );
+    if(entity === null) return RichUtils.handleKeyCommand(editorState, "backspace" );
 
-    const content = editorState.getCurrentContent()
-    return EditorState.push(editorState, Modifier.removeRange(content, selection, 'forward'), 'remove-range')
+    if(inlineTypes.includes(entity.type) === false) return RichUtils.handleKeyCommand(editorState, "backspace" );
+
+    return removeEntity(editorState, currentBlock, key);
 }

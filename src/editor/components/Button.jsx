@@ -27,6 +27,7 @@ const StyledButton = styled.button`
     font-weight: normal;
     text-align: center;
     cursor: pointer;
+    font-weight:bold;
 
     &:focus {
         border: 1px solid rgba(0,0,0,.1);

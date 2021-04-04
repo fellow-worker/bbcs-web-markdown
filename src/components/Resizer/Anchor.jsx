@@ -39,7 +39,11 @@ export const Anchor = ({onWidthChange, location, container}) => {
 
     const stopResize = () => {
         setResizing(false)
-        if(onWidthChange) onWidthChange(self.current.parentNode.style.width);
+        if(!onWidthChange) return;
+
+        const containerBox = container.getBoundingClientRect();
+        const width = (parseFloat(self.current.parentNode.style.width.slice(0, -2)) / containerBox.width * 100) + "%";
+        onWidthChange(width);
     }
 
     if(resizing === false) return <AnchorBase ref={self} x={x} y={y} cursor={cursor} onMouseDown={() => {setResizing(true)}} />

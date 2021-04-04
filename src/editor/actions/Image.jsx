@@ -1,5 +1,5 @@
 import { Image } from '@styled-icons/material-outlined'
-import { EditorState, AtomicBlockUtils } from 'draft-js';
+import { EditorState, Modifier } from 'draft-js';
 
 import { Button } from '../components/Button'
 
@@ -17,10 +17,20 @@ export const ImageButton = ({editorState, onChange, editor}) => {
 
 const insertImage = (editorState, url) => {
     const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('IMAGE','IMMUTABLE',{ src: url });
+    const selection = editorState.getSelection();
+    const contentStateWithEntity = contentState.createEntity('IMAGE','IMMUTABLE',{ src: url, width : '100%' });
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const contentStateWithText = Modifier.insertText(contentStateWithEntity, selection, `#img_${entityKey}`, null, entityKey);
+    return EditorState.set( editorState, { currentContent: contentStateWithText });
+}
+
+
+/*const insertImage = (editorState, url) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity('IMAGE','IMMUTABLE',{ src: url, width : '100%' });
     const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
     const newEditorState = EditorState.set( editorState, { currentContent: contentStateWithEntity });
     return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
-}
+}*/
 
 export default ImageButton;
