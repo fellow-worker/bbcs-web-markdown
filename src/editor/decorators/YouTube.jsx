@@ -1,37 +1,32 @@
-import { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components';
-import Resizer from '../../components/Resizer'
-import YouTubeEmbedded from './../../components/YouTube';
-import ToolBar from './ToolBar'
+import { useState } from 'react'
+import YouTubeRegular from './helpers/YouTubeRegular'
+import YouTubeResizable from './helpers/YouTubeResizable'
+import { useForceUpdate } from 'util/react';
 
+const Image = ({contentState, entityKey}) => {
+    const [ inResizeMode, setInResizeMode ] = useState(false);
+    const forceUpdate = useForceUpdate();
 
-const YouTube = ({contentState, entityKey}) => {
-    const { videoId, width } = contentState.getEntity(entityKey).getData();
-    const [ showToolBar, setShowToolBar ] = useState(false);
+    const onEnterResize = () => { setInResizeMode(true); }
+    const onLeaveResize = () => { setInResizeMode(false); }
 
-    const onMouseEnter = () => { setShowToolBar(true) }
-    const onMouseLeave = () => { setShowToolBar(false) }
-
-    const onWidthChange = (newWidth) => {
-        setShowToolBar(false);
-        contentState.replaceEntityData(entityKey,{ videoId : videoId, width : newWidth });
+    const onWidthChange = (width) => {
+        setInResizeMode(false);
+        const alignment = width === '100%' ? 'none' : data.alignment;
+        contentState.replaceEntityData(entityKey,{ videoId : data.videoId, width : width, alignment : alignment });
+        forceUpdate();
     }
 
-    const onResize = () => {
+    const onAlignmentChange = (alignment) => {
+        contentState.replaceEntityData(entityKey,{ videoId : data.videoId, width : data.width, alignment : alignment });
+        forceUpdate();
+    };
 
-    }
+    const data = contentState.getEntity(entityKey).getData();
+    const params = {...data, onLeaveResize, onEnterResize, onWidthChange, onAlignmentChange };
 
-    return (
-        <Wrapper onMouseEnter={onMouseEnter} onMouseLeave={onMouseLeave} width={width}>
-            <ToolBar show={showToolBar} onWidthChange={onWidthChange} onResize={onResize} />
-            <YouTubeEmbedded videoId={videoId} width="100%" />
-        </Wrapper>
-    );
-};
+    if(inResizeMode === true) return <YouTubeResizable {...params} />;
+    return <YouTubeRegular {...params} />;
+}
 
-
-const Wrapper = styled.div`
-    width : ${props => props.width};
-`
-
-export default YouTube;
+export default Image;

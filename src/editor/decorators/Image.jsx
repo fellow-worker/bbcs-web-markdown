@@ -1,65 +1,32 @@
-import { useState, useEffect, useRef } from 'react'
-import styled from 'styled-components';
-import Resizer from '../../components/Resizer'
+import { useState } from 'react'
+import ImageRegular from './helpers/ImageRegular'
+import ImageResizable from './helpers/ImageResizable'
+import { useForceUpdate } from 'util/react';
 
-import { ToolBar, ObjectWrapper } from './../components/ToolBar'
-import { Button } from './../components/Button'
+const Image = ({contentState, entityKey}) => {
+    const [ inResizeMode, setInResizeMode ] = useState(false);
+    const forceUpdate = useForceUpdate();
 
+    const onEnterResize = () => { setInResizeMode(true); }
+    const onLeaveResize = () => { setInResizeMode(false); }
 
-const Image = (props) => {
+    const onWidthChange = (width) => {
+        setInResizeMode(false);
+        const alignment = width === '100%' ? 'none' : data.alignment;
+        contentState.replaceEntityData(entityKey,{ src : data.src, width : width, alignment : alignment });
+        forceUpdate();
+    }
 
-    const ref = useRef(null);
-    const [ selected, setSelected ] = useState(false);
-    const [ container, setContainer ] = useState(null);
-    const { src, width } = props.contentState.getEntity(props.entityKey).getData();
-
-    const handleClickOutside = (event) => {
-        if (ref.current && ref.current.contains(event.target) === false) setSelected(false);
+    const onAlignmentChange = (alignment) => {
+        contentState.replaceEntityData(entityKey,{ src : data.src, width : data.width, alignment : alignment });
+        forceUpdate();
     };
 
-    useEffect(() => {
-        if(container !== null) return;
+    const data = contentState.getEntity(entityKey).getData();
+    const params = {...data, onLeaveResize, onEnterResize, onWidthChange, onAlignmentChange };
 
-        // This is a small hack. Resizer needs a container to be able to determine the left|right boundaries
-        if(ref.current !== null) setContainer(ref.current.closest("div.DraftEditor-root"));
-    });
-
-    useEffect(() => {
-        document.addEventListener('click', handleClickOutside, true);
-        return () => {
-            document.removeEventListener('click', handleClickOutside, true);
-        };
-    });
-
-    if(src === null) return null;
-
-    const onClick = (e) => {
-        setSelected(!selected);
-    }
-
-    if(selected === false) return <StyledImage width={width} onClick={onClick} src={src} />;
-
-    const onWidthChange = (newWidth) => {
-        props.contentState.replaceEntityData(props.entityKey,{ src : src, width : newWidth });
-    }
-
-    return (
-        <div ref={ref}>
-            <Resizer onWidthChange={onWidthChange} container={container} width={width}>
-                <Overlay onClick={onClick} src={src} />
-            </Resizer>
-        </div>
-    )
-};
-
-const StyledImage = styled.img`
-    width : ${props => props.width};
-`
-
-const Overlay = styled.img`
-    filter: brightness(70%);
-    -webkit-user-select: none;
-    user-select: none;
-`
+    if(inResizeMode === true) return <ImageResizable {...params} />;
+    return <ImageRegular {...params} />;
+}
 
 export default Image;

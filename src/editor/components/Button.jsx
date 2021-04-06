@@ -9,8 +9,12 @@ export const Button = ({children, tooltip, onClick, active, disabled}) => {
         if(disabled !== true) onClick();
     }
 
+    let color = 'white';
+    if(disabled) color = '#f5f5f5';
+    if(active) color = '#ededed';
+
     return (
-        <StyledButton disabled={disabled} onMouseDown={preventDefault} onMouseUp={preventDefault} onClick={onButtonClick}>
+        <StyledButton color={color} onMouseDown={preventDefault} onMouseUp={preventDefault} onClick={onButtonClick}>
             {children}
         </StyledButton>
     )
@@ -21,7 +25,7 @@ const StyledButton = styled.button`
     font-size: 13px;
     border: 1px solid rgba(0,0,0,.1);
     color: #444444;
-    background-color: ${props => props.disabled ? '#f5f5f5' : 'white' };
+    background-color: ${props => props.color };
     display: block;
     margin-bottom: 0;
     font-weight: normal;

@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react'
 import { AnchorBase } from './AnchorBase'
 
-export const Anchor = ({onWidthChange, location, container}) => {
+export const Anchor = ({onWidthChange, location, container, parent}) => {
     const self = useRef(null);
     const [ resizing, setResizing ] = useState(false);
 
@@ -33,19 +33,29 @@ export const Anchor = ({onWidthChange, location, container}) => {
         if(x === "right" && (parentBox.x + parentBox.width) === (containerBox.x + container.width)) return;
 
         // Calculate when width
-        const width = (x ==="right") ? event.clientX - parentBox.x : parentBox.x + parentBox.width - event.clientX;
-        self.current.parentNode.style.width = width + "px";
+        const width = ((x ==="right") ? event.clientX - parentBox.x : parentBox.x + parentBox.width - event.clientX) + "px";
+
+        if(parent) updateParentWidth(parent, width);
+        else updateParentWidth(self?.current?.parentNode, width);
     }
 
     const stopResize = () => {
         setResizing(false)
-        if(!onWidthChange) return;
+        document.body.style.userSelect = "auto";
 
         const containerBox = container.getBoundingClientRect();
-        const width = (parseFloat(self.current.parentNode.style.width.slice(0, -2)) / containerBox.width * 100) + "%";
-        onWidthChange(width);
+        const width = (self.current.parentNode.getBoundingClientRect().width / containerBox.width * 100) + "%";
+        if(parent) updateParentWidth(parent, width);
+
+        if(onWidthChange) onWidthChange(width);
     }
+
+    if(resizing === true) document.body.style.userSelect = "none";
 
     if(resizing === false) return <AnchorBase ref={self} x={x} y={y} cursor={cursor} onMouseDown={() => {setResizing(true)}} />
     return <AnchorBase ref={self} x={x} y={y} cursor={cursor} />
+}
+
+const updateParentWidth = (parent, width) => {
+    if(parent) parent.style.width = width;
 }

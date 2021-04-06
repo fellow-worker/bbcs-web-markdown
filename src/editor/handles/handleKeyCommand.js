@@ -1,6 +1,6 @@
 import {  RichUtils  } from 'draft-js';
 import { handleSplitBlockCommand } from './splitBlock';
-import { removeEntity, getCurrentBlock, getCurrentEntity } from '../../util/draftjs'
+import { removeEntityFromSelection, getEntityInSelection } from '../../util/draftjs'
 
 const inlineTypes = [ 'IMAGE', 'YOUTUBE'];
 
@@ -13,13 +13,7 @@ export const handleKeyCommand = (command, editorState) => {
 }
 
 const handleBackspace = (editorState) => {
-
-    const currentBlock = getCurrentBlock(editorState);
-    const { entity, key } = getCurrentEntity(editorState);
-
-    if(entity === null) return RichUtils.handleKeyCommand(editorState, "backspace" );
-
-    if(inlineTypes.includes(entity.type) === false) return RichUtils.handleKeyCommand(editorState, "backspace" );
-
-    return removeEntity(editorState, currentBlock, key);
+    const entity = getEntityInSelection(editorState);
+    if(entity === null || inlineTypes.includes(entity.type) === false) return RichUtils.handleKeyCommand(editorState, "backspace" );
+    return removeEntityFromSelection(editorState, entity.key);
 }

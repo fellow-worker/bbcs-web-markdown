@@ -1,11 +1,15 @@
 import styled from 'styled-components'
-import { ZoomOutMap } from '@styled-icons/material-outlined/ZoomOutMap'
+import { ZoomOutMap, FormatAlignLeft, FormatAlignRight } from '@styled-icons/material-outlined'
+import { Button } from 'editor/components/Button'
 
-import { Button } from '../components/Button'
-
-const ToolBar = ({show, onResize, onWidthChange }) => {
+const ToolBar = ({show, onEnterResize, onWidthChange, onAlignmentChange, alignment }) => {
 
     if(show === false) return null;
+
+    const onAlignmentClick = (align) => {
+        const updated = (align === alignment) ? 'none' : align;
+        onAlignmentChange(updated);
+    }
 
     return (
         <Wrapper>
@@ -13,7 +17,9 @@ const ToolBar = ({show, onResize, onWidthChange }) => {
                 <Tools>
                     <Button onClick={() => onWidthChange('100%')} >100%</Button>
                     <Button onClick={() => onWidthChange('50%')}>50%</Button>
-                    <Button onClick={onResize}><ZoomOutMap /></Button>
+                    <Button active={alignment === 'left'} onClick={() => onAlignmentClick('left')}><FormatAlignLeft /></Button>
+                    <Button active={alignment === 'right'} onClick={() => onAlignmentClick('right')}><FormatAlignRight /></Button>
+                    <Button onClick={onEnterResize}><ZoomOutMap /></Button>
                 </Tools>
             </ToolsWrapper>
             <Caret />

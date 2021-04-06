@@ -8,6 +8,7 @@ export const Border = styled.div`
     position:relative;
     -webkit-user-select: none;
     user-select: none;
+    box-sizing:border-box;
 
     img {
         width:100%;
