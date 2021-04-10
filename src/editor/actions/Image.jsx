@@ -3,13 +3,19 @@ import { EditorState, AtomicBlockUtils } from 'draft-js';
 
 import { Button } from '../components/Button'
 
-export const ImageButton = ({editorState, onChange, editor}) => {
+export const ImageButton = ({editorState, onChange, editor, onImageModalRequest }) => {
 
-    const onClick = () => {
-        const url = prompt("Please provide the image url");
+    const setUrl = (url) => {
+
+        if(url === null) return;
         const state = insertImage(editorState, url);
         onChange(state);
         if(editor) setTimeout(() => editor.focus(), 1);
+    }
+
+    const onClick = () => {
+        if(onImageModalRequest) onImageModalRequest(setUrl);
+        else setUrl(prompt("Please provide the image url"));
     }
 
     return <Button tooltip="Afbeelding invoegen" onClick={onClick}><Image /></Button>

@@ -9,6 +9,7 @@ import Underline from './Underline'
 import Styles from './Styles'
 import Superscript from './Superscript'
 import Subscript from './Subscript'
+import Vimeo from './Vimeo'
 import YouTube from './Youtube'
 
-export { Bold, Image, Italic, Link, ListBulleted, ListNumbered, StrikeThrough, Styles, Subscript, Superscript, Underline, YouTube }
+export { Bold, Image, Italic, Link, ListBulleted, ListNumbered, StrikeThrough, Styles, Subscript, Superscript, Underline,Vimeo, YouTube }

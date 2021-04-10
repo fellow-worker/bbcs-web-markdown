@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import Resizer from 'components/Resizer'
-import YouTubeEmbedded from 'components/YouTube'
 
-const YouTubeResizable = ({videoId, onLeaveResize, onWidthChange}) => {
+const YouTubeResizable = ({children, onLeaveResize, onWidthChange}) => {
 
     const ref = useRef(null);
     const [ container, setContainer ] = useState(null);
@@ -31,7 +30,7 @@ const YouTubeResizable = ({videoId, onLeaveResize, onWidthChange}) => {
     return (
         <div ref={ref}>
             <Resizer parent={parent}  onWidthChange={onWidthChange} container={container} width="100%">
-                <YouTubeEmbedded videoId={videoId} width="100%" />
+                {children}
             </Resizer>
         </div>
     )

@@ -1,10 +1,9 @@
 import { useState } from 'react'
-import ImageRegular from './helpers/ImageRegular'
-import ImageResizable from './helpers/ImageResizable'
+import VideoRegular from './helpers/VideoRegular'
+import VideoResizable from './helpers/VideoResizable'
 import { useForceUpdate } from 'util/react';
 
-const Image = (props) => {
-    const {contentState, entityKey, blockKey} = props;
+const Video = ({contentState, entityKey, children, blockKey}) => {
     const [ inResizeMode, setInResizeMode ] = useState(false);
     const forceUpdate = useForceUpdate();
 
@@ -14,20 +13,20 @@ const Image = (props) => {
     const onWidthChange = (width) => {
         setInResizeMode(false);
         const alignment = width === '100%' ? 'none' : data.alignment;
-        contentState.replaceEntityData(entityKey,{ src : data.src, width : width, alignment : alignment });
+        contentState.replaceEntityData(entityKey,{ videoId : data.videoId, width : width, alignment : alignment });
         forceUpdate();
     }
 
     const onAlignmentChange = (alignment) => {
-        contentState.replaceEntityData(entityKey,{ src : data.src, width : data.width, alignment : alignment });
+        contentState.replaceEntityData(entityKey,{ videoId : data.videoId, width : data.width, alignment : alignment });
         forceUpdate();
     };
 
     const data = contentState.getEntity(entityKey).getData();
     const params = {...data, onLeaveResize, onEnterResize, onWidthChange, onAlignmentChange, entityKey, blockKey };
 
-    if(inResizeMode === true) return <ImageResizable {...params} />;
-    return <ImageRegular {...params} />;
+    if(inResizeMode === true) return <VideoResizable {...params}>{children}</VideoResizable>;
+    return <VideoRegular {...params}>{children}</VideoRegular>;
 }
 
-export default Image;
+export default Video;

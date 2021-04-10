@@ -9,9 +9,6 @@ div.editor {
     text-align: justify;
 }
 
-div.public-DraftEditor-content {
-    min-height: 200px;
-}
 
 div.editor h4, div.editor h3, div.editor h2 {
     color: #154879;

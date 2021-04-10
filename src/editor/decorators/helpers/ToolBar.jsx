@@ -1,8 +1,9 @@
 import styled from 'styled-components'
 import { ZoomOutMap, FormatAlignLeft, FormatAlignRight } from '@styled-icons/material-outlined'
+import { Trash } from '@styled-icons/bootstrap/Trash'
 import { Button } from 'editor/components/Button'
 
-const ToolBar = ({show, onEnterResize, onWidthChange, onAlignmentChange, alignment }) => {
+const ToolBar = ({show, onEnterResize, onWidthChange, onAlignmentChange, alignment, onDeleteBlock }) => {
 
     if(show === false) return null;
 
@@ -20,6 +21,7 @@ const ToolBar = ({show, onEnterResize, onWidthChange, onAlignmentChange, alignme
                     <Button active={alignment === 'left'} onClick={() => onAlignmentClick('left')}><FormatAlignLeft /></Button>
                     <Button active={alignment === 'right'} onClick={() => onAlignmentClick('right')}><FormatAlignRight /></Button>
                     <Button onClick={onEnterResize}><ZoomOutMap /></Button>
+                    <Button onClick={onDeleteBlock}><Trash /></Button>
                 </Tools>
             </ToolsWrapper>
             <Caret />

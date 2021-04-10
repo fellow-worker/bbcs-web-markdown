@@ -4,7 +4,7 @@ import * as Actions from '../actions'
 
 
 
-export const ButtonBar = ({editorState, setEditorState, editor }) => {
+export const ButtonBar = ({editorState, setEditorState, editor, onImageModalRequest, onFileModalRequest }) => {
 
     return (
         <Bar>
@@ -21,8 +21,9 @@ export const ButtonBar = ({editorState, setEditorState, editor }) => {
             <Actions.ListNumbered editorState={editorState} onChange={setEditorState} />
             <Separate />
             <Actions.Link editorState={editorState} onChange={setEditorState} />
-            <Actions.Image editorState={editorState} onChange={setEditorState} editor={editor} />
+            <Actions.Image onImageModalRequest={onImageModalRequest} editorState={editorState} onChange={setEditorState} editor={editor} />
             <Actions.YouTube  editorState={editorState} onChange={setEditorState} />
+            <Actions.Vimeo  editorState={editorState} onChange={setEditorState} />
         </Bar>
     )
 }

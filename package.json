@@ -4,9 +4,9 @@
   "private": true,
   "dependencies": {
     "@styled-icons/bootstrap": "^10.29.0",
+    "@styled-icons/fa-brands": "^10.26.0",
     "@styled-icons/foundation": "^10.28.0",
     "@styled-icons/material-outlined": "^10.28.0",
-    "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "draft-js": "^0.11.7",
@@ -43,8 +43,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.13.10",
-    "@storybook/addon-essentials": "^6.2.2",
-    "@storybook/react": "^6.1.21"
+    "@babel/core": "^7.13.15",
+    "@storybook/addon-essentials": "^6.2.7",
+    "@storybook/preset-create-react-app": "^3.1.7",
+    "@storybook/react": "^6.2.7"
+  },
+  "peerDependencies": {
+    "@testing-library/dom": "7.21.4",
+    "babel-loader": "8.2.2"
   }
 }

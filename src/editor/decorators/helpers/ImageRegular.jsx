@@ -19,9 +19,16 @@ const ImageRegular = (props) => {
 
     const useAlignment = alignment && alignment !== 'none';
 
+    const onDeleteBlock = () => {
+        if(ref?.current === null) return;
+        const wrapper = ref.current.closest('.editor-wrapper');
+        const event = new CustomEvent('delete-block', { detail : { entityKey : props.entityKey, blockKey : props.blockKey }});
+        wrapper.dispatchEvent(event);
+    }
+
     return (
         <>
-            <ToolBarContainer {...props}>
+            <ToolBarContainer {...props} onDeleteBlock={onDeleteBlock}>
                 <Image alt="" ref={ref} src={src} />
             </ToolBarContainer>
             { useAlignment && <Image alt="" src={src} /> }

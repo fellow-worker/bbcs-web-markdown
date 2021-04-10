@@ -1,4 +1,4 @@
-import { EditorState, Modifier } from 'draft-js';
+import { EditorState, Modifier, AtomicBlockUtils, SelectionState } from 'draft-js';
 
 export const getEntityInSelection = (editorState) => {
     const selection = editorState.getSelection()
@@ -56,4 +56,40 @@ export const getSelectionOfEntity = (editorState, block, entityKey) => {
         }
     );
     return entitySelection;
+}
+
+export const insertAtomicBlock = (editorState, entityType, data ) => {
+    const contentState = editorState.getCurrentContent();
+    const contentStateWithEntity = contentState.createEntity(entityType,'IMMUTABLE',data);
+    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
+    const newEditorState = EditorState.set( editorState, { currentContent: contentStateWithEntity });
+    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
+}
+
+export const removeBlock = (editorState, blockKey) => {
+
+    const content = editorState.getCurrentContent();
+    const block = content.getBlockForKey(blockKey);
+
+    var targetRange = new SelectionState({
+      anchorKey: blockKey,
+      anchorOffset: 0,
+      focusKey: blockKey,
+      focusOffset: block.getLength(),
+    });
+
+    const withoutBlock = Modifier.removeRange(content, targetRange, 'backward');
+    const newState = EditorState.push(editorState, withoutBlock, 'remove-range');
+    return EditorState.forceSelection(newState, withoutBlock.getSelectionAfter());
+}
+
+export const getEntities = (contentBlock) => {
+    let ranges = [];
+    contentBlock.findEntityRanges(() => true, (start,end) => ranges.push(start));
+    let entities = [];
+    ranges.forEach(start => {
+        const entity = contentBlock.getEntityAt(start);
+        if(entity !== null) entities.push(entity);
+    } )
+    return entities;
 }

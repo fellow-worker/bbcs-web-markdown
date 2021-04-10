@@ -1,13 +1,14 @@
 import { Youtube } from '@styled-icons/bootstrap'
-import { EditorState, AtomicBlockUtils } from 'draft-js';
-
 import { Button } from '../components/Button'
+import { insertAtomicBlock,  } from 'util/draftjs';
 
 export const YoutubeButton = ({editorState, onChange, editor}) => {
 
     const onClick = () => {
         const url = prompt("Please provide the youtube url");
-        const state = insertYoutube(editorState, getVideoId(url));
+        const videoId = getVideoId(url);
+        if(videoId === null) return;
+        const state = insertAtomicBlock(editorState, 'YOUTUBE', { videoId: videoId });
         onChange(state);
         if(editor) setTimeout(() => editor.focus(), 1);
     }
@@ -16,19 +17,11 @@ export const YoutubeButton = ({editorState, onChange, editor}) => {
 }
 
 const getVideoId = (url) => {
+    if(url === null) return null;
     if(url.includes("https://") === false) return url;
     const urlObject = new URL(url);
     const params = new URLSearchParams(urlObject.search);
     return params.get("v");
-}
-
-const insertYoutube = (editorState, videoId) => {
-    console.log(videoId);
-    const contentState = editorState.getCurrentContent();
-    const contentStateWithEntity = contentState.createEntity('YOUTUBE','IMMUTABLE',{ videoId: videoId });
-    const entityKey = contentStateWithEntity.getLastCreatedEntityKey();
-    const newEditorState = EditorState.set( editorState, { currentContent: contentStateWithEntity });
-    return AtomicBlockUtils.insertAtomicBlock(newEditorState, entityKey, ' ');
 }
 
 export default YoutubeButton;

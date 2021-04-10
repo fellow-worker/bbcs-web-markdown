@@ -5,17 +5,18 @@ export default {
     title: 'Components/YouTube',
     component : YouTube,
     argTypes: {
-        children: {
-          control: 'text',
-        },
+        videoId: 'XtwIT8JjddM',
     },
 };
 
-export const Responsive = () => {
+const ResponsiveTemplate = (args) => {
     return (
-        <YouTube draggable="false" videoId="XtwIT8JjddM" />
+        <YouTube draggable="false"{...args} />
     );
 }
+
+export const Responsive = ResponsiveTemplate.bind({});
+Responsive.args = { videoId: 'XtwIT8JjddM' };
 
 const FixedWidthTemplate = (args) => {
     return (
@@ -24,7 +25,4 @@ const FixedWidthTemplate = (args) => {
 }
 
 export const FixedWidth = FixedWidthTemplate.bind({});
-FixedWidth.args = {
-    videoId: 'XtwIT8JjddM',
-    width: '640px',
-};
+FixedWidth.args = { videoId: 'XtwIT8JjddM', width: '640px' };

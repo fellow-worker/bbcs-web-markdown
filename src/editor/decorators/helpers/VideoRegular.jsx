@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'react'
 import ToolBarContainer from './ToolBarContainer'
-import YouTubeEmbedded from 'components/YouTube'
 import { setFigure} from './Regular'
 import { useForceUpdate } from 'util/react';
 import styled from 'styled-components'
@@ -9,7 +8,7 @@ const YouTubeRegular = (props) => {
     const ref = useRef(null);
     const forceUpdate = useForceUpdate();
 
-    const {width, videoId, alignment } = props;
+    const {width, alignment } = props;
 
     useEffect(() => {
         if(ref?.current === null) forceUpdate();
@@ -20,14 +19,21 @@ const YouTubeRegular = (props) => {
 
     const useAlignment = alignment && alignment !== 'none';
 
+    const onDeleteBlock = () => {
+        if(ref?.current === null) return;
+        const wrapper = ref.current.closest('.editor-wrapper');
+        const event = new CustomEvent('delete-block', { detail : { entityKey : props.entityKey, blockKey : props.blockKey }});
+        wrapper.dispatchEvent(event);
+    }
+
     return (
         <>
-            <ToolBarContainer {...props}>
-                <RefBox ref={ref} >
-                    <YouTubeEmbedded videoId={videoId} width="100%" />
+            <ToolBarContainer {...props} onDeleteBlock={onDeleteBlock}>
+                <RefBox ref={ref}>
+                    {props.children}
                 </RefBox>
             </ToolBarContainer>
-            { useAlignment && <YouTubeEmbedded videoId={videoId} width="100%" /> }
+            { useAlignment && props.children}
         </>
     )
 }

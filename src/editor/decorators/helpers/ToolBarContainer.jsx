@@ -2,16 +2,16 @@ import { useState } from 'react'
 import styled from 'styled-components';
 import ToolBar from './ToolBar'
 
-const ToolBarContainer = ({onWidthChange, onAlignmentChange, alignment, onEnterResize, width, children}) => {
+const ToolBarContainer = ({onWidthChange, onAlignmentChange, alignment, onEnterResize, children, onDeleteBlock}) => {
 
     const [ showToolBar, setShowToolBar ] = useState(false);
 
     const onMouseEnter = () => { setShowToolBar(true) }
     const onMouseLeave = () => { setShowToolBar(false) }
 
-    const onWidthChangeHandler = (newWidth) => {
+    const onWidthChangeHandler = (width) => {
         setShowToolBar(false);
-        if(onWidthChange) onWidthChange(newWidth)
+        if(onWidthChange) onWidthChange(width)
     }
 
     return (
@@ -22,11 +22,12 @@ const ToolBarContainer = ({onWidthChange, onAlignmentChange, alignment, onEnterR
                 onWidthChange={onWidthChangeHandler}
                 onEnterResize={onEnterResize}
                 onAlignmentChange={onAlignmentChange}
+                onDeleteBlock={onDeleteBlock}
             />
             {children}
         </Wrapper>
     );
-};
+}
 
 
 const Wrapper = styled.div`

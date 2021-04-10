@@ -1,4 +1,4 @@
-import YouTubeEmbedded from 'components/YouTube'
+import VimeoFrame from 'components/Vimeo'
 import Video from './Video'
 
 const YouTube = ({contentState, entityKey, blockKey}) => {
@@ -7,7 +7,7 @@ const YouTube = ({contentState, entityKey, blockKey}) => {
 
     return (
         <Video contentState={contentState} entityKey={entityKey} blockKey={blockKey}>
-            <YouTubeEmbedded videoId={videoId} width="100%" />
+            <VimeoFrame videoId={videoId} width="100%" />
         </Video>
     )
 }
