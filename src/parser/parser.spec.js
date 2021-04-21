@@ -18,6 +18,12 @@ describe("Parser", () => {
         expect(result).toBe(null);
     });
 
+    it("Tow much letters - Ruth 4:2", () => {
+        const reference = "Ruth 4:2-3aaa?";
+        const result = parse(reference,"nl");
+        expect(result).toBe(null);
+    });
+
     it("Simple Reference - Ruth 1:2 - space terminator", () => {
         const reference = "Ruth 1:2 a";
         const result = parse(reference,"nl");
@@ -239,6 +245,12 @@ describe("Parser", () => {
         singleRangeCheck(result, "rom", 1, 8, 1, 10);
     });
 
+    it("Romeinen 1:8a-10b case",function() {
+        const reference = "te vinden in Romeinen 1:8a-10b en verder in";
+        const result = parse(reference,"nl");
+        singleRangeCheck(result, "rom", 1, 8, 1, 10);
+    });
+
     // (BIJ-11) A colon after a reference leaves it undetected
     it("BIJ-11 - colon", () => {
         const reference = "In Ruth 1:2-2:4,3:4-4:5: Boas";
@@ -329,13 +341,84 @@ describe("Parser", () => {
         singleRangeCheck(result, "1ti", 2, 1, 2, 1);
     });
 
+    it("checking start / end", () => {
+        let reference = "In 1 Timotheüs 1:1 vinden";
+        let result = parse(reference,"nl");
+        expect(result[0].start).toBe(3)
+        expect(result[0].end).toBe(17);
+        expect(result[0].length).toBe(15);
+    });
+
+    it("checking start / end - Exodus", () => {
+        let reference = "Exodus 1:2?";
+        let result = parse(reference,"nl");
+        expect(result[0].start).toBe(0)
+        expect(result[0].end).toBe(9);
+        expect(result[0].length).toBe(10);
+    });
+
+    it("Romeinen 1:8a-10b case",function() {
+        const reference = "te vinden in Romeinen 1:8a-10b en verder in";
+        const result = parse(reference,"nl");
+        singleRangeCheck(result, "rom", 1, 8, 1, 10);
+    });
+
+    it("case (Prediker 3:19)",function() {
+        const reference = "(Prediker 3:19)";
+        const result = parse(reference,"nl");
+        singleRangeCheck(result, "ecc", 3, 19, 3, 19);
+        expect(result[0].start).toBe(1)
+        expect(result[0].end).toBe(13);
+    });
+
+    it("case (1 Koningen 10:14-25; 2 Kronieken 9:22-24)",function() {
+        const reference = "(1 Koningen 10:14-15; 2 Kronieken 9:22-24)";
+        let result = parse(reference,"nl");
+        result = result.sort((a,b) => a.start - b.start);
+
+        singleRangeCheck([result[0]], "1ki", 10, 14, 10, 15);
+        singleRangeCheck([result[1]], "2ch", 9, 22, 9, 24);
+    });
+
+    it("case Prediker 12:1 `Denk",function() {
+        const reference = "Prediker 12:1 `Denk";
+        const result = parse(reference,"nl");
+        singleRangeCheck(result, "ecc", 12, 1, 12, 1);
+    });
+
+    it("case (zie Psalm 102:25-26 en 2 Petrus 3:7,10)",function() {
+        const reference = "(zie Psalm 102:25-26 en 2 Petrus 3:7,10)";
+        let result = parse(reference,"nl");
+        result = result.sort((a,b) => a.start - b.start);
+
+        singleRangeCheck([result[0]], "psa", 102, 25, 102, 26);
+
+        expect(result[1].book).toBe("2pe");
+        expect(result[1].ranges.length).toBe(2);
+
+        expect(result[1].ranges[0].chapter.start).toBe(3);
+        expect(result[1].ranges[0].chapter.end).toBe(3);
+        expect(result[1].ranges[0].verse.start).toBe(7);
+        expect(result[1].ranges[0].verse.end).toBe(7);
+
+        expect(result[1].ranges[1].chapter.start).toBe(3);
+        expect(result[1].ranges[1].chapter.end).toBe(3);
+        expect(result[1].ranges[1].verse.start).toBe(10);
+        expect(result[1].ranges[1].verse.end).toBe(10);
+
+        expect(result[1].length).toBe(15);
+        expect(result[1].start).toBe(24);
+        expect(result[1].end).toBe(38);
+    });
+
+
     it("reduce - simplify output", () => {
         var reference = "te vinden in 1 Johannes 1:2 en Johannes 3:4 en verder in";
         const result = reduce(parse(reference,"nl"));
         expect(result.length).toBe(2);
 
         expect(result[0].start).toBe(13)
-        expect(result[0].end).toBe(27);
+        expect(result[0].end).toBe(26);
         expect(result[0].input).toBe('1 Johannes 1:2');
         expect(result[0].chapter.start).toBe(1);
         expect(result[0].chapter.end).toBe(1);
@@ -343,7 +426,7 @@ describe("Parser", () => {
         expect(result[0].verse.end).toBe(2);
 
         expect(result[1].start).toBe(31)
-        expect(result[1].end).toBe(43);
+        expect(result[1].end).toBe(42);
         expect(result[1].input).toBe('Johannes 3:4');
         expect(result[1].chapter.start).toBe(3);
         expect(result[1].chapter.end).toBe(3);

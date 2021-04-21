@@ -8,5 +8,6 @@ export const getDecorator = () => {
         { strategy: strategies.findImageEntities, component: components.Image },
         { strategy: strategies.findYouTubeEntities, component: components.YouTube },
         { strategy: strategies.findVimeoEntities, component: components.Vimeo },
+        { strategy: strategies.findBibleText, component: components.BibleText },
     ]);
 }

@@ -22,7 +22,8 @@
   "scripts": {
     "start": "react-scripts start",
     "start-storybook": "start-storybook",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "build" : "react-scripts build"
   },
   "eslintConfig": {
     "extends": [

@@ -1,6 +1,5 @@
 import { BookList } from './index';
 
-
 export const reduce = (results) => {
     if(results === null) return [];
     let reduced = [];
@@ -12,6 +11,8 @@ export const reduce = (results) => {
                 input : result.input,
                 chapter : range.chapter,
                 verse : range.verse,
+                book : result.book,
+                length : result.length
             };
             reduced.push(value);
         });
@@ -32,6 +33,9 @@ export const reduce = (results) => {
     return parseBooks(text,BookList);
 };
 
+const termination = "[: .\\])\\};?!]";
+const terminationRegexp = new RegExp(`${termination}$`);
+
 /**
  * Parses the text and replaces the found verses references
  * @param {string} text The text to parse
@@ -41,9 +45,12 @@ export const reduce = (results) => {
 const parseBooks = (text,books) => {
     let results = [];
     books.forEach(book => {
-        const regexp = RegExp(`${book.term}[ ][1-9][0-9:\\-,a-z]*[: .\\])\\};]+`,'g');
+
+        if(terminationRegexp.test(text) === false) text += " ";
+
+        const regexp = RegExp(`${book.term}[ ][1-9][0-9:\\-,a-z]*${termination}+`,'g');
         let match;
-        while(match = regexp.exec(text + " ")) {
+        while((match = regexp.exec(text))) {
             const result = parseMatch(match, text, book);
             if(result !== null) results.push(result);
         }
@@ -53,24 +60,33 @@ const parseBooks = (text,books) => {
 };
 
 const parseMatch = (match, text, book) => {
+    if(terminationRegexp.test(text) === false) text += " ";
     let result = handlePrefixes(match, text, book);
     if(result === null) return null;
     const parsed = parseReference(result, book);
     return (parsed.ranges.length !== 0) ? parsed : null;
 }
 
+const multipleLetterReg = RegExp('[a-z]{2}','i');
+
 const handlePrefixes = (match, text, book) => {
 
     let input = match[0].substr(0, match[0].length - 1);
     if(input.endsWith(':')) input = input.substr(0,input.length - 1);
-    const end = input.length + match.index;
+    while(terminationRegexp.test(input) === true) input = input.substr(0,input.length - 1);
+
+    const end = input.length + match.index; // this in including the terminator
     const result = {
         start : match.index,
-        end : end,
+        end : input.length + match.index -1, // this in the inclusive end
+        length : input.length,
         input : input,
         book : book.abr,
         ref : input.substring(book.term.length + 1, end)
     };
+
+    // check if the ref contains two consecutive letters.. then is not a correct reference
+    if(multipleLetterReg.exec(result.ref)) return null;
 
     if(!book.ignorePrefixes) return result;
 
