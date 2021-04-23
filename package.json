@@ -1,7 +1,6 @@
 {
   "name": "bbcs.client.text",
-  "version": "0.1.0",
-  "private": true,
+  "version": "0.1.1",
   "dependencies": {
     "@styled-icons/bootstrap": "^10.29.0",
     "@styled-icons/fa-brands": "^10.26.0",
