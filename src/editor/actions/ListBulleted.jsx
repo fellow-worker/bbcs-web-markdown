@@ -3,7 +3,8 @@ import { RichUtils } from 'draft-js'
 import { FormatListBulleted } from '@styled-icons/material-outlined'
 import { Button } from '../components/Button'
 
-const ListBulleted = ({editorState, onChange}) => {
+const ListBulleted = ({editorState, onChange, show}) => {
+    if(show === false) return null;
 
     const onClick = () => {
         const state = RichUtils.toggleBlockType(editorState,"unordered-list-item")

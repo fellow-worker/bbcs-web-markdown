@@ -1,3 +1,9 @@
+import { reduce, parse } from './parser';
+
+export const parser = (text, language = 'nl') => {
+    return reduce(parse(text, language));
+}
+
 export const BookList = [
     {abr: "gen", term: "Genesis", chapters : 50 },
     {abr: "exo", term: "Exodus", chapters : 40 },
@@ -97,3 +103,4 @@ export const BookList = [
     {abr: "jud", term: "Judas", chapters : 1},
     {abr: "rev", term: "Openbaring", chapters : 22}
 ];
+

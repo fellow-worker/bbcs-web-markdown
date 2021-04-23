@@ -3,7 +3,9 @@ import { getSelectionEntity } from 'draftjs-utils';
 import { Button } from '../components/Button'
 import { InsertLink, LinkOff } from '@styled-icons/material-outlined'
 
-const Link = ({onChange, editorState}) => {
+const Link = ({onChange, editorState, show}) => {
+
+    if(show === false) return null;
 
     // Detect is currently a hyperlink is selected
     const entityKey = getSelectionEntity(editorState);

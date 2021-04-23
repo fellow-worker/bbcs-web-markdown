@@ -3,7 +3,9 @@ import { EditorState, AtomicBlockUtils } from 'draft-js';
 
 import { Button } from '../components/Button'
 
-export const ImageButton = ({editorState, onChange, editor, onImageModalRequest }) => {
+export const ImageButton = ({editorState, onChange, editor, onImageModalRequest, show }) => {
+
+    if(show === false) return null;
 
     const setUrl = (url) => {
 

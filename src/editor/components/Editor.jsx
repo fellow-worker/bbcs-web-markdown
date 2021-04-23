@@ -5,12 +5,14 @@ import { Editor, convertToRaw } from 'draft-js';
 
 import * as handles from '../handles'
 import { ButtonBar } from './ButtonBar'
+import { getConfig } from '../config'
 
 const RichTextEditor = props => {
 
     const editor = useRef();
     const wrapper = useRef();
     const [editorState, setEditorState] = useState(handles.getInitialContent(props.content));
+    const config = getConfig(props.config);
 
     // This effect will ensure the refs are loaded
     useEffect(() => {
@@ -53,6 +55,7 @@ const RichTextEditor = props => {
     return (
         <Wrapper ref={wrapper} className="editor-wrapper">
             <ButtonBar
+                config={config}
                 onImageModalRequest={props.onImageModalRequest}
                 onFileModalRequest={props.onFileModalRequest}
                 editorState={editorState}

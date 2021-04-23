@@ -2,8 +2,8 @@ import { Youtube } from '@styled-icons/bootstrap'
 import { Button } from '../components/Button'
 import { insertAtomicBlock,  } from 'util/draftjs';
 
-export const YoutubeButton = ({editorState, onChange, editor}) => {
-
+export const YoutubeButton = ({editorState, onChange, editor, show}) => {
+    if(show === false) return null;
     const onClick = () => {
         const url = prompt("Please provide the youtube url");
         const videoId = getVideoId(url);

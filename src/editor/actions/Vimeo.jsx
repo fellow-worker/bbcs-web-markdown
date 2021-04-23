@@ -3,7 +3,8 @@ import { insertAtomicBlock,  } from 'util/draftjs';
 
 import { Button } from '../components/Button'
 
-export const VimeoButton = ({editorState, onChange, editor}) => {
+export const VimeoButton = ({editorState, onChange, editor, show}) => {
+    if(show === false) return null;
 
     const onClick = () => {
         const url = prompt("Please provide the vimeo url");

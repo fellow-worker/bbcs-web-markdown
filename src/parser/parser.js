@@ -34,7 +34,7 @@ export const reduce = (results) => {
 };
 
 const termination = "[: .\\])\\};?!]";
-const terminationRegexp = new RegExp(`${termination}$`);
+export const terminationRegexp = new RegExp(`${termination}$`);
 
 /**
  * Parses the text and replaces the found verses references

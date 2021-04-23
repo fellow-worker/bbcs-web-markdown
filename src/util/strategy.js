@@ -1,5 +1,3 @@
-import { reduce, parse } from 'parser/parser'
-
 export const findLinkEntities = (contentBlock, callback, contentState) => {
     return findEntities(contentBlock, callback, contentState, 'LINK')
 }
@@ -39,9 +37,13 @@ const findEntities = (contentBlock, callback, contentState, type) => {
 }
 
 export const findBibleText = (contentBlock, callback, contentState) => {
+    return findEntities(contentBlock, callback, contentState, 'BIBLEVERSE')
+}
+
+/*export const findBibleText = (contentBlock, callback, contentState) => {
     const ranges = reduce(parse(contentBlock.getText()));
     if(ranges === null) return;
     ranges.forEach(range => {
         callback(range.start, range.end + 1); // draft-js wants the exclusive upper bound.
     })
-}
+}*/

@@ -22,3 +22,12 @@ export const WithOutput = () => {
         </div>
     )
 }
+
+export const BasicEditor = () => {
+    const  config = { styles : [], vimeo : false, youTube : false, link : false, image : false, bulletList : false, numberedList : false, multiLine : false, }
+    return (
+        <div className="storybook">
+            <Editor config={config}  />
+        </div>
+    )
+}

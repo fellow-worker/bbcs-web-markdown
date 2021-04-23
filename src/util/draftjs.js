@@ -1,4 +1,4 @@
-import { EditorState, Modifier, AtomicBlockUtils, SelectionState } from 'draft-js';
+import { EditorState, Modifier, AtomicBlockUtils, SelectionState, genKey, ContentBlock, ContentState } from 'draft-js';
 
 export const getEntityInSelection = (editorState) => {
     const selection = editorState.getSelection()
@@ -14,7 +14,6 @@ export const getEntityInSelection = (editorState) => {
     currentEntity.key = currentEntityKey;
     return currentEntity;
 }
-
 
 export const getBlockInSelection = (editorState) => {
     const selection = editorState.getSelection()
@@ -83,13 +82,29 @@ export const removeBlock = (editorState, blockKey) => {
     return EditorState.forceSelection(newState, withoutBlock.getSelectionAfter());
 }
 
-export const getEntities = (contentBlock) => {
+export const getEntities = (contentState, contentBlock, type = null) => {
     let ranges = [];
-    contentBlock.findEntityRanges(() => true, (start,end) => ranges.push(start));
+    contentBlock.findEntityRanges(() => true, (start,end) => ranges.push({start,end}));
     let entities = [];
-    ranges.forEach(start => {
-        const entity = contentBlock.getEntityAt(start);
-        if(entity !== null) entities.push(entity);
+    ranges.forEach(range => {
+
+        const entityKey = contentBlock.getEntityAt(range.start);
+        if(entityKey === null) return;
+        const entity = contentState.getEntity(entityKey);
+
+        const entityType = entity.getType();
+        if(type !== null && entityType !== type) return;
+        entities.push({ start : range.start, end: range.end, key : entityKey, type : entityType, entity : entity});
     } )
-    return entities;
+    return entities; //.sort((a,b) => a.start - b.start);
+}
+
+export const insertEmptyBlock = (editorState, contentState) => {
+    const anchorKey = genKey();
+    const nextBlock = new ContentBlock({ key: anchorKey, type: "unstyled", text: "" });
+    const blockMap = contentState.getBlockMap().set(nextBlock.getKey(), nextBlock);
+    const inserted = ContentState.createFromBlockArray(blockMap.toArray());
+    editorState = EditorState.set(editorState, { currentContent: inserted });
+    const selection = new SelectionState({ anchorKey, anchorOffset : 0, focusOffset : 0, focusKey: anchorKey,  isBackward: false, });
+    return EditorState.forceSelection(editorState, selection);
 }
