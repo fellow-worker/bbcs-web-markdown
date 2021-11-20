@@ -1,0 +1,5 @@
+export { Bold } from './Bold'
+export { Code } from './Code'
+export { Italic } from './Italic'
+export { Link } from './Link'
+export { Image } from './Image'

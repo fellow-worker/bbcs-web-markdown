@@ -1,34 +1,42 @@
 {
   "name": "bbcs.client.text",
-  "description": "A wysiwyg editor for bbcs.client",
-  "author": "Fellow Worker <fellow-worker@outlook.com> (https://www.fellow-workers.org:)",
-  "version": "0.1.4",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
-    "@styled-icons/bootstrap": "^10.29.0",
-    "@styled-icons/fa-brands": "^10.26.0",
-    "@styled-icons/foundation": "^10.28.0",
-    "@styled-icons/material-outlined": "^10.28.0",
+    "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
-    "draft-js": "^0.11.7",
-    "draftjs-utils": "^0.10.2",
-    "immutable": "^4.0.0-rc.12",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "@types/jest": "^27.0.2",
+    "@types/node": "^12.0.0",
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/styled-components": "^5.1.15",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
     "react-scripts": "4.0.3",
-    "styled-components": "^5.2.1",
-    "web-vitals": "^1.0.1"
+    "styled-components": "^5.3.3",
+    "typescript": "^4.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "start-storybook": "start-storybook",
-    "test": "react-scripts test",
-    "build": "react-scripts build"
+    "build-typescript": "rm -rf lib && tsc --build --force --verbose",
+    "start-storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook -o docs",
+    "test": "jest"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -44,13 +52,13 @@
     ]
   },
   "devDependencies": {
-    "@babel/core": "^7.13.15",
-    "@storybook/addon-essentials": "^6.2.7",
-    "@storybook/preset-create-react-app": "^3.1.7",
-    "@storybook/react": "^6.2.7"
-  },
-  "peerDependencies": {
-    "@testing-library/dom": "7.21.4",
-    "babel-loader": "8.2.2"
+    "@storybook/addon-actions": "^6.3.12",
+    "@storybook/addon-essentials": "^6.3.12",
+    "@storybook/addon-links": "^6.3.12",
+    "@storybook/node-logger": "^6.3.12",
+    "@storybook/preset-create-react-app": "^3.2.0",
+    "@storybook/react": "^6.3.12",
+    "jest": "^27.3.1",
+    "ts-jest": "^27.0.7"
   }
 }
