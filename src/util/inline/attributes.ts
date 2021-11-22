@@ -1,5 +1,4 @@
-export enum Alignment { Left = "left", Right = "right", Center = "center", None = "none" }
-export enum Type { Video, Regular }
+import { Alignment, LinkType } from "@/types";
 
 export const getAttributes = (info : string) => {
 
@@ -50,7 +49,7 @@ function getHeadingId(options : string[]) : string | undefined {
 const getType = (options : string[]) => {
 
     const types = options.filter(f => f === "video");
-    return types.length === 1 ? Type.Video : Type.Regular;
+    return types.length === 1 ? LinkType.Video : LinkType.Regular;
 }
 
 function getTitle(options : string[]) : string | undefined {

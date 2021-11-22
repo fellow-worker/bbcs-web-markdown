@@ -1,5 +1,8 @@
-export const Code = (props : { text : string}) => {
-    const { text } = props;
-    const code = text.substr(1,text.length - 2);
-    return <code>{code}</code>
+import { BlockProps } from './BlockProps'
+import * as Base from '@/components/Base'
+
+export const Code = (props : BlockProps) => {
+    const { block } = props;
+    const code = block.text.substr(1, block.text.length - 2);
+    return <Base.Code>{code}</Base.Code>
 }

@@ -1,23 +1,37 @@
 import styled from "styled-components";
+import { Document } from "@/types";
+import { parse } from '@/util/block/parser'
 import { Block } from "./Block";
-import { Clear } from "./Blocks";
+import * as Base from '@/components/Base'
 
-export const MarkDown = (props : { content? : string }) => {
-    return <MarkDownBase inner={false} content={props.content} />
+type MarkDownProps = {
+    content? : string
+    onVerseClick? : (ref : string) => any
 }
 
-export const MarkDownBase  = (props : { content? : string, inner : boolean }) => {
+export const MarkDown = (props : MarkDownProps) => {
+    const { content } = props;
+    if(!content) return null;
+    const document = parse(content)
 
-    if(!props.content) return null;
-    const blocks = props.content
-        .replace(/\r/g,'')
-        .replace(/\n{3,}/g,"\n\n")
-        .trim().split("\n\n");
+    const onVerseClick = (ref : string) => {
+        if(props.onVerseClick) props.onVerseClick(ref);
+    }
 
+    return <MarkDownBase document={document} onVerseClick={onVerseClick} />
+}
+
+type MarkDownBaseProps = {
+    document : Document
+    onVerseClick : (ref : string) => any
+}
+
+export const MarkDownBase  = (props : MarkDownBaseProps) => {
+    const { document } = props;
     return (
         <Wrapper>
-            {blocks.map((text,index) => <Block inner={props.inner} key={index} text={text} />)}
-            <Clear />
+            { document.blocks.map((block,index) => <Block {...props} key={index} block={block} />) }
+            <Base.Clear />
         </Wrapper>
     )
 }
@@ -27,6 +41,7 @@ const Wrapper = styled.div`
     p.left { text-align: left; }
     p.right { text-align: right; }
     p.center { text-align: center; }
+    p.justify { text-align: justify }
 
     img {
         max-width: 100%;
@@ -38,6 +53,4 @@ const Wrapper = styled.div`
     a {
         border-width: 0xp;
     }
-
 `
-

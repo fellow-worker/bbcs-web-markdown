@@ -1,12 +1,19 @@
 import { MarkDownBase } from "../MarkDown";
+import { BlockProps } from './BlockProps'
+import * as Base from '@/components/Base'
 
-export const BlockQuote = (props : { text : string}) => {
+export const BlockQuote = (props : BlockProps) => {
+    const { block, onVerseClick } = props;
+    if(!block?.blocks) return null;
 
-    const text = props.text.replace(/\n>/g,"\n").substr(1);
+    const document = {
+        blocks : block.blocks,
+        footnotes : props.document.footnotes
+    }
 
     return (
-        <blockquote>
-            <MarkDownBase inner={true} content={text} />
-        </blockquote>
+        <Base.BlockQuote>
+            <MarkDownBase document={document} onVerseClick={onVerseClick}  />
+        </Base.BlockQuote>
     )
 }

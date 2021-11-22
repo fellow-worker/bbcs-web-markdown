@@ -1,7 +1,8 @@
-import { Annotation, getAnnotations, Parser } from './inline'
-import { parsers as all } from './specs';
+import { Annotation, Parser } from '@/types';
+import { getAnnotations } from './annotations'
+import { parsers as all } from './parsers';
 
-export const compare = (expected : Annotation[], actual : Annotation[] ) => {
+export const assert = (expected : Annotation[], actual : Annotation[] ) => {
     expect(actual.length).toBe(expected.length);
     for(let index = 0; index < expected.length; index++) {
         single(expected[index], actual[index]);
@@ -25,7 +26,7 @@ export const run = (text : string, output : string, expected : Annotation[], par
     const [ result, annotations ] = getAnnotations(text, parsers);
 
     expect(result).toBe(output);
-    compare(expected, annotations);
+    assert(expected, annotations);
 }
 
 type TestParams = Parser & { text : string, expected : string }

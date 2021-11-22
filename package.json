@@ -21,7 +21,8 @@
     "build-typescript": "rm -rf lib && tsc --build --force --verbose",
     "start-storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook -o docs",
-    "test": "jest"
+    "test": "jest",
+    "test-coverage": "jest --coverage --collectCoverageFrom=\"./src/**\""
   },
   "eslintConfig": {
     "extends": [

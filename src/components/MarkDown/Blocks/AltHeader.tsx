@@ -1,10 +1,16 @@
 import { Inline } from "../Inline";
+import { BlockProps } from './BlockProps'
+import * as Base from '@/components/Base'
+import { getText } from '@/util/block/header'
 
-export const AltHeader = (props : { text : string}) => {
+export const AltHeader = (props : BlockProps) => {
+    const lines = props.block.text.split("\n");
+    const level = lines[1][0] === '=' ? 1 : 2;
+    const [ text, id ] = getText(lines[0], level);
 
-    const lines = props.text.split("\n");
-    const isLevelOne = lines[1][0] === "=";
-
-    if(isLevelOne) return <h1><Inline text={lines[0]} /></h1>
-    else return <h2><Inline text={lines[0]} /></h2>
+    return (
+        <Base.Header level={level} id={id}>
+            <Inline {...props} text={text} />
+        </Base.Header>
+    )
 }

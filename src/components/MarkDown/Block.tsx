@@ -1,69 +1,38 @@
-import * as Blocks from './Blocks'
+import * as Blocks from "./Blocks";
+import { Block as Type, BlockType, Document } from "@/types";
+import * as Base from '@/components/Base'
 
-export const Block = (props : { text : string, inner : boolean}) => {
+export type BlockProps = {
+    block: Type;
+    document: Document;
+    onVerseClick : (ref : string) => any;
+  };
 
-    const { text, inner } = props;
-    if(!text || text.trim() === "") return null;
+export const Block = (props: BlockProps) => {
+    const { block } = props;
+    if (!block.text || block.text.trim() === "") return null;
 
     // Now blocks have to be detected
-
-    if(isHeader(text)) return <Blocks.Header text={text} />
-    if(isAltHeader(text)) return <Blocks.AltHeader text={text} />
-    if(isBlockQuote(text)) return <Blocks.BlockQuote text={text} />
-    if(isOrderedList(text)) return <Blocks.OrderedList text={text} />
-    if(isUnorderedList(text)) return <Blocks.UnorderedList text={text} />
-    if(!inner && isCode(text)) return <Blocks.Code text={text} />
-    if(!inner && isHorizontalLine(text)) return <Blocks.HorizontalLine />
-    if(isClear(text)) return <Blocks.Clear />
-
-    // Default we are dealing with a paragraph
-    return <Blocks.Paragraph text={text} />
-}
-
-const isHeader = (text : string) => {
-    // A header should start with 1 till 6 # and be a single line
-    return text.indexOf("\n") === -1 && /^#{1,6} /.test(text);
-}
-
-const isAltHeader = (text : string) => {
-    // An alt header must have 2 lines.
-    // The second should have 3 or more- for an H1 or 3 or more = for an H2
-    const count = (text.match(/\n/g) || []).length;
-    if(count !== 1) return false;
-    return /\n-{3,}$/.test(text) || /\n={3,}$/.test(text);
-}
-
-const isBlockQuote = (text : string) => {
-    return startsEveryLineWith(text,/^>/);
-}
-
-const isOrderedList = (text : string) => {
-    return startsEveryLineWith(text,/^ *\d+./);
-}
-
-const isUnorderedList = (text : string) => {
-    return startsEveryLineWith(text,/^ *\* /) ||
-           startsEveryLineWith(text,/^ *- /) ||
-           startsEveryLineWith(text,/^ *\+ /);
-}
-
-const startsEveryLineWith = (text : string, regexp : RegExp) => {
-    const lines = text.split("\n");
-    for(let index = 0; index < lines.length; index++) {
-        if(!regexp.test(lines[index])) return false;
+    switch (block.type) {
+        case BlockType.Header:
+            return <Blocks.Header {...props} block={block} />;
+        case BlockType.AltHeader:
+            return <Blocks.AltHeader {...props} block={block} />;
+        case BlockType.BlockQuote:
+            return <Blocks.BlockQuote {...props} block={block} />;
+        case BlockType.OrderedList:
+            return <Blocks.OrderedList {...props} block={block} />;
+        case BlockType.UnorderedList:
+            return <Blocks.UnorderedList {...props} block={block} />;
+        case BlockType.Code:
+            return <Blocks.Code {...props} block={block} />;
+        case BlockType.HorizontalLine:
+            return <Base.HorizontalLine />;
+        case BlockType.Footnote:
+            return <Blocks.Footnote {...props} block={block} />;
+        case BlockType.Clear:
+            return <Base.Clear />;
+        default:
+            return <Blocks.Paragraph {...props} block={block} />;
     }
-    return true;
-}
-
-const isCode = (text :string) => {
-    if(text.length < 2) return false;
-   return /^`/g.test(text) && /`$/g.test(text)
-}
-
-const isHorizontalLine = (text :string) => {
-    return /^\*{3,}$/g.test(text) || /^_{3,}$/g.test(text) || /^-{3,}$/g.test(text);
-}
-
-const isClear = (text :string) => {
-    return text === "[clear]";
-}
+};

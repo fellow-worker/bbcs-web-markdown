@@ -1,7 +1,13 @@
-import { Annotation } from "../../../util/inline";
+import { Annotation, Document } from "@/types";
 import { Tag } from './Tag'
 
-type LineProps = { text : string, index : number, annotations : Annotation[] }
+type LineProps = {
+    text : string,
+    index : number,
+    annotations : Annotation[],
+    document : Document
+    onVerseClick : (ref : string) => any;
+}
 
 export const Line = (props : LineProps) => {
     const { text, index, annotations } = props;
@@ -13,8 +19,8 @@ export const Line = (props : LineProps) => {
     return (
         <>
             {text.substr(index, next.index - index)}
-            <Tag active={next} text={text} />
-            <Line index={next.index + next.length} text={text} annotations={annotations} />
+            <Tag {...props}  active={next} text={text} />
+            <Line {...props} index={next.index + next.length} text={text} annotations={annotations} />
         </>
     );
 }
@@ -22,7 +28,6 @@ export const Line = (props : LineProps) => {
 const getNextAnnotation = (index : number, annotations : Annotation[]) => {
 
     let next = null as Annotation | null;
-
     annotations.forEach(a => {
         if(index > a.index) return;
         if(!next || a.index < next.index) next = a;

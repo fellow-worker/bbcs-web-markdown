@@ -1,3 +1,3 @@
 export const HorizontalLine = () => {
-    return <hr/>
+    return <hr />
 }

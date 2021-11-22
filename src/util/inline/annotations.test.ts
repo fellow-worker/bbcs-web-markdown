@@ -1,11 +1,12 @@
-import { getAnnotations, Annotation, merge } from "./inline";
-import specs from "./specs";
-import { compare, run, runParams } from "./inline.test.utils";
+import { getAnnotations,  merge } from "./annotations";
+import * as parsers from "./parsers";
+import { assert, run, runParams } from "./annotations.test.utils";
+import { Annotation, InlineType } from "@/types";
 
 describe("getAnnotations", () => {
     const params = {
-        bold: { text: "**bold**", ...specs.bold, expected: "§§bold§§" },
-        italic: { text: "*italic*", ...specs.italic, expected: "*italic*" },
+        bold: { text: "**bold**", ...parsers.bold, expected: "§§bold§§" },
+        italic: { text: "*italic*", ...parsers.italic, expected: "*italic*" },
     };
 
     test("bold", () => {
@@ -22,18 +23,18 @@ describe("getAnnotations", () => {
 
         // Act
         const [output, result] = getAnnotations(text, [
-            specs.bold,
-            specs.italic,
+            parsers.bold,
+            parsers.italic,
         ]);
 
         // Assert
         const expected = [
-            { type: "bold", index: 9, length: 19 },
-            { type: "italic", index: 8, length: 21 },
+            { type: InlineType.Bold, index: 9, length: 19 },
+            { type: InlineType.Italic, index: 8, length: 21 },
         ];
 
         expect(output).toBe("this is *§§bold and italic§§*");
-        compare(expected, result);
+        assert(expected, result);
     });
 
     test("inner, line start", () => {
@@ -42,18 +43,18 @@ describe("getAnnotations", () => {
 
         // Act
         const [output, result] = getAnnotations(text, [
-            specs.bold,
-            specs.italic,
+            parsers.bold,
+            parsers.italic,
         ]);
 
         // Assert
         const expected = [
-            { type: "bold", index: 1, length: 19 },
-            { type: "italic", index: 0, length: 21 },
+            { type: InlineType.Bold, index: 1, length: 19 },
+            { type: InlineType.Italic, index: 0, length: 21 },
         ];
 
         expect(output).toBe("*§§bold and italic§§* at the beginning");
-        compare(expected, result);
+        assert(expected, result);
     });
 
     test("inner, line middle", () => {
@@ -62,20 +63,20 @@ describe("getAnnotations", () => {
 
         // Act
         const [output, result] = getAnnotations(text, [
-            specs.bold,
-            specs.italic,
+            parsers.bold,
+            parsers.italic,
         ]);
 
         // Assert
         const expected = [
-            { type: "bold", index: 4, length: 19 },
-            { type: "italic", index: 3, length: 21 },
+            { type: InlineType.Bold, index: 4, length: 19 },
+            { type: InlineType.Italic, index: 3, length: 21 },
         ];
 
         expect(output).toBe(
             "no *§§bold and italic§§* are at not the beginning"
         );
-        compare(expected, result);
+        assert(expected, result);
     });
 
     test("bold twice", () => {
@@ -84,18 +85,18 @@ describe("getAnnotations", () => {
 
         // Act
         const [output, result] = getAnnotations(text, [
-            specs.bold,
-            specs.italic,
+            parsers.bold,
+            parsers.italic,
         ]);
 
         // Assert
         const expected = [
-            { type: "bold", index: 11, length: 8 },
-            { type: "bold", index: 24, length: 7 },
+            { type: InlineType.Bold, index: 11, length: 8 },
+            { type: InlineType.Bold, index: 24, length: 7 },
         ];
 
         expect(output).toBe("start with §§bold§§ and §§end§§ with it.");
-        compare(expected, result);
+        assert(expected, result);
     });
 
     test("bold & italic", () => {
@@ -104,8 +105,8 @@ describe("getAnnotations", () => {
         const output = "*§§bold & italic§§*";
 
         const expected = [
-            { type: "bold", index: 1, length: 17 },
-            { type: "italic", index: 0, length: 19 },
+            { type: InlineType.Bold, index: 1, length: 17 },
+            { type: InlineType.Italic, index: 0, length: 19 },
         ];
 
         // Act & Assert
@@ -117,8 +118,8 @@ describe("merge", () => {
     test("bold & italic", () => {
         // Assert
         const annotations = [
-            { type: "italic", index: 0, length: 21, children: undefined },
-            { type: "bold", index: 1, length: 19 },
+            { type: InlineType.Italic, index: 0, length: 21, children: undefined },
+            { type: InlineType.Bold, index: 1, length: 19 },
         ] as Annotation[];
 
         const expected = { ...annotations[0] };
@@ -128,14 +129,14 @@ describe("merge", () => {
         const merged = merge(annotations);
 
         // Assert
-        compare([expected], merged);
+        assert([expected], merged);
     });
 
     test("image & link", () => {
         // Assert
         const annotations = [
-            { type: 'image', index: 1, length:148 },
-            { type: 'link', index: 0, length: 233, children : undefined }
+            { type: InlineType.Image, index: 1, length:148 },
+            { type: InlineType.Link, index: 0, length: 233, children : undefined }
         ] as Annotation[];
 
         const expected = { ...annotations[1] };
@@ -145,6 +146,6 @@ describe("merge", () => {
         const merged = merge(annotations);
 
         // Assert
-        compare([expected], merged);
+        assert([expected], merged);
     });
 });

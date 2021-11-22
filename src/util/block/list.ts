@@ -1,8 +1,4 @@
-export type ListItem = {
-    text : string
-    sub : ListItem[]
-    level : number
-}
+import { ListItem } from "@/types";
 
 export const parse = (text : string, clearLine : (text : string) => string) => {
 

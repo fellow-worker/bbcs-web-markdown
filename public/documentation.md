@@ -1,12 +1,66 @@
 # Tekst layout voor bijbelcursussen.nl
 
+Dit document beschrijft de [MarkDown](https://en.wikipedia.org/wiki/Markdown blank) opmaak taal zoals deze gebruikt kan worden binnen de editor van bijbelcursussen.nl. De editor ondersteunt de meeste standaard MarkDown, maar kent ook enkele specifieke uitbreidingen.
+
+Naast deze uitleg kan het ook nuttig zijn om de [basis syntax](https://www.markdownguide.org/basic-syntax blank) en [extended syntax](https://www.markdownguide.org/extended-syntax blank) pagina's van markdownguide.org te bekijken.
+
+## Paragraaf
+
+Een paragraaf is niet anders dan een blok met tekst, vooraf gegaan en afgesloten door een lege regel.
+
+Binnen MarkDown is er geen standaard die bepaalt hoe er een lijn afbreking word opgegaan.
+Om het zo eenvoudig mogelijk te maken, is er voor bijbelcursussen.nl gekozen om een enter gebruiken.
+
+Voor de leesbaarheid en de beste consistentie is het overigens **sterk** aanbevolen alleen paragraven te gebruiken.
+
+### Uitlijnen
+
+Om paragraven te kunnen kan er een speciaal commando aan het begin worden gegeven. Door de gebruikt de maken `[right]` of `[center]` kan rechts dan wel gecentreerd worden uitegelijnd. Om te tekst volledige uit te vullen kan `[justify]` worden gebruikt.
+
+***let op***, Dit zijn geen standaaard opties binnen MarkDown.
+
+#### Voorbeelden
+
+[right]Zijn liefde deed Hem afdalen naar deze zondige aarde. Wij kunnen ons niet voorstellen wat een enorme stap omlaag dat voor Hem was. De Zoon van God kwam als Mens op deze aarde. Hij werd als baby geboren in een stal en werd te slapen gelegd in een voerbak voor de dieren. We kunnen ons totaal niet voorstellen wat het betekent om als volmaakt heilig en zuiver mens te gaan leven in een totaal door de zonde bedorven wereld. We kunnen absoluut niet begrijpen wat het Hem, die zo rijk was, kostte om zo arm te worden!
+
+[center]Toen ging Hij er, net als de herder in het verhaal, op uit om het verloren schaap te zoeken. Regelmatig zegt Hij: ‘Ik, de Mensenzoon, ben gekomen om afgedwaalde (of verloren) mensen te zoeken en te redden’. De mensen verwerpen Hem, maar Hij gaat door met zoeken. De godsdienstige leiders vervolgen Hem, maar Hij blijft zoeken. Zelfs zijn vrienden verlaten Hem, maar Hij blijft verloren mensen zoeken. Hij wordt niet ontmoedigd. Hij geeft het niet op. Hij is vastbesloten om zijn doel te bereiken en het verloren schaap te vinden.
+
+[justify]Nu stuurt de goede Herder het goede nieuws naar iedereen op de wereld. Als er ergens een schuldige en verloren zondaar zich wil bekeren van zijn zonden en in geloof de Here Jezus wil ontvangen als zijn Meester en Redder, dan wordt hij gered. Dan worden zijn zonden hem vergeven. Dan ontvangt hij van God eeuwig leven, als vrij kado (Romeinen 6:23).  Dat gebeurt wanneer de Here ons vindt, op het moment dat wij tot Hem roepen: ‘Here, red mij’.
+
+## Nadruk
+
+Om nadruk te leggen binnen een tekst kunnen **asteriks** worden gebruikt, gebruik: `**vet**` of `*cursief*`.
+
+Dit zorgt er voor dat de tekst respectievelijk **vet** of *cursief* word.
+
+**vet** en *cursief* zijn ook samen gebruik voor nog meer ***nadruk***.
+
+## Quote
+
+Om een tekst te qouten en daar nadruk op te leggen, dan van een zogemaande blockqoute worden gebruik gemaakt. Plaats een > (groter dan teken) aan het begin van paragraaf om een quote te krijgen.
+
+>De vraag 'waarom gebeurd dit in mijn leven?' is een totaal irrelevante vraag. Of wij begrijpen het antwoorden niet omdat Gods wegen hoger zijn dan die van ons. Of wij raken compleet in de war van wat ons allemaal te nog wachten staat.
+
 ## Koppen
 
+Een kop kan gebruikt word om structuur in een document aan te brengen. Een kop moet altijd vooraf gegaan worden door een lege regel (behalve aan het begin van het document) en er na moet altijd een lege regel komen.
 
+Er zijn 6 niveau's van koppen. Hoe hoger het niveaum des te groter het van letter van kop. Niveau 1 is het hoogste niveau.
 
-## Links
+Op een kop van niveau 1 gebruiken voldoet een # dan een spatie en dan de titel van de kop.
 
-Met een link kun je de gebruiker naar een andere pagina laten gaan. De algemene syntax is:
+`# Kop 1`
+
+Voor niveau 2, gebruik ##, voor 3 ##, etc.
+
+### Alternatieve kop
+
+Voor niveau 1 en niveau 2 is er een alternatieve notatie. In plaats van een # gebruiken, dient er op de volgende regel de tekens = of - (voor niveau 1 en niveau 2 respectievelijk). Zie de kop van het onderwerp **links** vor een voorbeeld.
+
+Links
+-----
+
+Links kunnen gebruikt worden om de gebruiker naar een andere pagina laten gaan. De algemene syntax is:
 
 `[titel](url)`
 
@@ -24,13 +78,13 @@ De andere groep zijn de [Farizeeërs](https://nl.wikipedia.org/wiki/Farizeeën "
 
 ### Open op andere tabblad
 
-Soms is het wenselijk dat de link word geopend op een ander tab, bijvoorbeeld omdat je naar een andere website wilt verwijzen. Dit kan eenvoudig door na de url of de tooltip het woordje blank toe toevoegen:
+Soms is het wenselijk dat de link word geopend op een ander tab, bijvoorbeeld omdat naar een andere website te verwijzen. Dit kan eenvoudig door na de url of de tooltip de term  `blank` toe toevoegen:
 
 #### Voorbeeld
 
 In zijn toespraak tot koning [Agrippa](https://nl.wikipedia.org/wiki/Herodes_Agrippa_I blank) noemt hij de al vervulde profetieën uit het Oude Testament als het bewijs dat Jezus de beloofde Messias is (Handelingen 26:22-27).
 
-***let op***, er dient altijd een spatie zitten de url, blank en tooltop! Deze optie is geen standaaard binnen MarkDown.
+***let op,*** er dient altijd een spatie zitten de url, blank en tooltop! Deze optie is geen standaaard binnen MarkDown.
 
 ### Linken binnen de pagina
 
@@ -65,23 +119,24 @@ Net als bij de links is het mogelijk een tooltip te gebruiken. Deze tooltip is n
  Zo laat de wereld en alles wat daarin is, de scheppende en ordenende kracht van God zien.. ![Berglandschap](https://api.bijbelcursussen.com/content/download/public/een-God-een-weg/natuur.jpg "De scheppende en ordenende kracht van God")
 
 ### Breedte van de afbeelding
+
 De standaard **breedte** van de afbdeelding 100%, maar elk percentage tussen 0 en 100 mag. Voeg gewoon een getal in en afbeelding word geschaald.
 
 #### Voorbeeld
 
-![Hedder met schaap](https://api.bijbelcursussen.com/content/download/public/geboren-om-te-winnen/lost-sheep3.jpg 50)
+![Hedder met schaap](https://api.bijbelcursussen.com/content/download/public/geboren-om-te-winnen/lost-sheep3.jpg 25)
 
 ***let op***, er dient altijd een spatie zitten de url, blank en tooltop! Dit is geen standaaard optie binnen MarkDown.
 
 ### Uitlijning
 
-Bij een breedte anders dan 100% kun je ook nog de uitlijning bepalen. Gebruik **left**, of **right** om de afbeelding uit te lijnen en de tekst er om heen te laten lopen.
+Bij een breedte anders dan 100% is het ook mogelijk de uitlijning te bepalen. Gebruik **left**, of **right** om de afbeelding uit te lijnen en de tekst er om heen te laten lopen.
 
-Soms is het voor de leesbaarheid nodig om een harde break te forceren, bijvoorbeeld bij een kop, of omdat de volgende paragraaf niet op de afbeelding slaat. In deze gevallen kun je commando `[clear]` gebruiken.
+Soms is het voor de leesbaarheid nodig om een harde break te forceren, bijvoorbeeld bij een kop, of omdat de volgende paragraaf niet op de afbeelding slaat. In deze gevallen kan het commando `[clear]` gebruiken.
 
 #### Voorbeeld
 
-![Hedder met schaap](https://api.bijbelcursussen.com/content/download/public/geboren-om-te-winnen/lost-sheep3.jpg "De Hedder draagt zijn schaap" right 50)
+![Hedder met schaap](https://api.bijbelcursussen.com/content/download/public/geboren-om-te-winnen/lost-sheep3.jpg "De Hedder draagt zijn schaap" right 25)
 
 Als Jezus dit verhaal vertelt, heeft hij twee groepen in gedachten. De tolontvangers (of belastingontvangers) en zondaars (oftewel: slechte mensen). Deze mensen weten dat ze verloren zijn. De andere groep zijn de Farizeeërs (de meest strenge Joodse godsdienstige sekte) en de Bijbelgeleerden (de makers en uitleggers van de Joodse wetten).
 
@@ -89,4 +144,78 @@ Als Jezus dit verhaal vertelt, heeft hij twee groepen in gedachten. De tolontvan
 
 ## Links & afbeeldingen
 
-Het is mogelijk om Links en afbeelding te combineren.
+Het is mogelijk om Links en afbeelding te combineren. Voeg eenvoudigweg op de plek van de title in de link de afbeelding in. Ook de verschillende opties die link en afbeelding kennen zijn te gebruiken.
+
+#### Voorbeeld
+
+[![Hedder met schaap](https://api.bijbelcursussen.com/content/download/public/geboren-om-te-winnen/lost-sheep3.jpg 25)](https://nl.wikipedia.org/wiki/Gelijkenis_van_de_verloren_zoon)
+
+## Video's
+
+Het is heel eenvoudig om een video's in te voegen. Gebruik dezelfde syntax als voor links en voeg na de url het woord video toe:
+
+`[titel](url video)`
+
+Er zal automatisch gedetecteerd worden of het video van Youtube, Vimeo of een andere bron (mp4) betreft. Voor youtube en vimeo gebruik de gewone link, het gebruik van de embedded link of code is niet nodig.
+
+***let op***, Dit is geen standaaard optie binnen MarkDown.
+
+#### Voorbeeld - Youtube
+
+[Een waarheid die ons leven verandert](https://youtu.be/QXdmxl1RWZo video)
+
+#### Voorbeeld - MP4
+
+[Dit is een MP4 Video](http://clips.vorwaerts-gmbh.de/VfE_html5.mp4 video)
+
+## Voetnoten
+
+Het is ook mogelijk met voetnoten te werken. voor elke voetnoot is een uniek label nodig. Elke voetnoot bestaat uit twee delen. In de tekst kan een referentie worden opgenomen en de voetnoot zelf kan op een andere plek in het document getoond worden.
+
+`referentie: [^label]`
+
+`voetnoot: [^label]:`
+
+De label mag elke waarde hebben zolangs er alleen maar gebruik gemaakt worden van letters (a-z), cijfers (0-9), de undescore (_) of het strepjes (-). Labels voor voetnoten moeten uniek zijn, maar er mag wel vaker naar verwezen worden.
+
+***let op***, Dit is geen standaaard optie binnen MarkDown.
+
+#### Voorbeeld
+
+Alle mensen op de wereld stellen deze vraag[^vraag]. Ze vroegen[^vraag] het toen Hij op aarde[^aarde] was. Ze vroegen[^vraag] het alle eeuwen erna. Ze vragen[^vraag] het nog steeds. Het is inderdaad de belangrijkste vraag[^vraag], die een mens kan stellen.
+
+----
+
+[^label]: Voetnoten in code worden op dit moment nog meegesteld. In de praktijk zal dit echter niet gebruikt worden.
+
+[^vraag]: dat is wel veel gevraagd zeg.
+
+[^aarde]: Voetnoten kunnen over meerdere alinea's verdeelt worden
+
+    Zolang de volgende alinea met 4 spaties word uitgelijnd.
+
+    Zal dit netjes worden weergeven.
+
+En dit is de afsluitende regel.
+
+## Verzen
+
+Net zoals in de huidige website worden verzen automatisch herkent. Met zelfde regels en opties. In dit voorbeeld zijn alleen de teksten gehighlight, in de website versie worden ze klikbaar.
+
+***let op***, Dit is geen standaaard optie binnen MarkDown.
+
+#### Voorbeeld
+
+Alle mensen op de wereld stellen deze vraag. Ze vroegen het toen Hij op aarde was. Ze vroegen het alle eeuwen erna. Ze vragen het nog steeds. Het is inderdaad de belangrijkste vraag, die een mens kan stellen.
+
+Toen Zijn eerste volgelingen zagen wat Jezus deed, vroegen ze zich onder elkaar af, wie Hij wel kon zijn. ‘Wie is Deze toch, dat zelfs de wind en de zee Hem gehoorzaam zijn?’ (Markus 4:41). De religieuze leiders van die tijd, die Hem haatten, vroegen zich hardop af: ‘Wie is deze Man, die godslastering spreekt? Wie kan zonden vergeven dan God alleen?’ (Lukas 5:21). Zelfs nadat Hij drie en een half jaar door het land gereisd en overal gepredikt had, vroegen de mensen nog: ‘Wie is Dat?’ (Mattheüs 21:10).
+
+Wie is Jezus? Hoe we de vraag voor onszelf beantwoorden, bepaalt ons leven. Vier evangeliebeschrijvingen beantwoorden deze vraag. Als jij die verslagen aandachtig doorleest, erover nadenkt en je door de waarheid en betrouwbaarheid ervan laat overtuigen, verandert je leven. ‘Jezus nu heeft in aanwezigheid van Zijn discipelen nog wel veel andere tekenen gedaan, die niet beschreven zijn in dit boek, maar deze zijn beschreven, opdat u gelooft dat Jezus de Christus is, de Zoon van God, en opdat u, door te geloven, het leven zult hebben in Zijn Naam’ (Johannes 20:30,31).
+In deze cursus bestuderen we wat de Bijbel zegt over Jezus.
+
+## Tabellen
+
+| Syntax      | Description |
+| ----------- | ----------- |
+| Header      | Title       |
+| Paragraph   | Text        |

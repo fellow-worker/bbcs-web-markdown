@@ -1,4 +1,4 @@
-import specs from "../../../util/specs"
+import { InlineType } from "@/types";
 import * as Tags from './index'
 import { TagProps } from './TagProps'
 
@@ -6,16 +6,24 @@ export const Tag = (props : TagProps) => {
     const { active } = props;
 
     switch(active.type)  {
-        case specs.bold.type:
+        case InlineType.Bold:
             return <Tags.Bold {...props} />
-        case specs.italic.type:
+        case InlineType.Italic:
             return <Tags.Italic {...props} />
-        case specs.image.type:
+        case InlineType.Image:
             return <Tags.Image {...props} />
-        case specs.link.type:
+        case InlineType.Link:
             return <Tags.Link {...props} />
-        case specs.code.type:
+        case InlineType.Code:
             return <Tags.Code {...props} />
+        case InlineType.SuperScript:
+            return <Tags.SuperScript {...props} />
+        case InlineType.SubScript:
+            return <Tags.SubScript {...props} />
+        case InlineType.Reference:
+            return <Tags.Reference {...props} />
+        case InlineType.Verse:
+            return <Tags.Verse {...props} />
         default:
             return null;
     }

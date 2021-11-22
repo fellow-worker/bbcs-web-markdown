@@ -1,3 +1,4 @@
+import { ChangeEvent } from "react";
 import styled, { css } from "styled-components";
 
 type TextEditorProps = {
@@ -6,7 +7,13 @@ type TextEditorProps = {
 }
 
 export const TextEditor = (props : TextEditorProps) => {
-    const { value, onChange } = props;
+    const { value } = props;
+
+
+    const onChange = (event : ChangeEvent<HTMLTextAreaElement>) => {
+        if(props.onChange) props.onChange(event.target.value);
+    }
+
     return (
         <Panel>
             <AutoGrow>{value}</AutoGrow>

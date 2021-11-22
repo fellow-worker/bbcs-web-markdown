@@ -1,19 +1,13 @@
-import { parsers as all} from "./specs";
+import { Annotation, Parser, InlineType } from "@/types";
+import { parsers as all } from "./parsers";
+import { parse  } from '../verse/parser'
 
-export type Parser = {
-    regexp : RegExp[]
-    type : string
-    intermediate? : (value : string) => string
-}
-
-export const parse = (text : string, parsers? : Parser[]) => {
+export const annotate = (text : string, parsers? : Parser[]) => {
     if(!parsers) parsers = all;
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [_, annotations] = getAnnotations(text,parsers);
     return merge(annotations);
 }
-
-export type Annotation = { type : string, index : number,  length: number, children? : Annotation  }
 
 export function getAnnotations(text : string, parsers : Parser[]) : [string, Annotation[]] {
     const result = [] as Annotation[];
@@ -23,26 +17,33 @@ export function getAnnotations(text : string, parsers : Parser[]) : [string, Ann
         parser.regexp.forEach(regexp => {
             let match = text.match(regexp);
             let index = 0;
+
             while(match !== null) {
 
                 if(match.index === undefined) break;
 
-                result.push({ type : parser.type, index : index + match.index , length: match[0].length  })
-                text = replaceMatch(text, index + match.index, match[0].length, parser);
-                index = index + match.index + match[0].length;
+                const replace = replaceMatch(text, index + match.index, match[0].length, parser);
+                result.push({ type : parser.type, index : index + match.index , length: replace[1]  })
+                text = replace[0]
 
+                index = index + match.index + replace[1];
                 match = text.substr(index).match(regexp);
             }
         })
     });
 
+    const verses = parse(text);
+    if(verses.length !== 0) result.push(...verses);
+
     return [ text, result ];
 }
 
-const replaceMatch = (text : string, index : number, length : number, parser : Parser) => {
-    if(!parser.intermediate) return text;
+function replaceMatch(text : string, index : number, length : number, parser : Parser) : [string, number] {
+    if(!parser.intermediate) return [ text, length ];
     const matched = text.substr(index, length);
-    return text.substring(0,index) + parser.intermediate(matched) + text.substring(matched.length + index);
+
+    const [ replaced, matchLength ] = parser.intermediate(matched);
+    return [ text.substring(0,index) + replaced + text.substring(matched.length + index), matchLength ]
 }
 
 export const merge = (annotations : Annotation[]) => {
@@ -56,21 +57,25 @@ export const merge = (annotations : Annotation[]) => {
         linked.add(annotation);
     });
 
-    annotations.forEach(a => { clean(a)});
-
+    // annotations.forEach(a => { clean(a)});
+    console.log("t", JSON.parse(JSON.stringify(annotations)));
     const root = annotations.filter(a => !linked.has(a));
     return root;
 }
 
 const clean = (annotation : Annotation) => {
     switch (annotation.type) {
-        case "image" :
+        case InlineType.SubScript:
+        case InlineType.SuperScript:
+        case InlineType.Image:
+        case InlineType.Reference:
             annotation.children = undefined;
             break;
-        case "link" :
+        case InlineType.Link:
             if(!annotation.children) break;
-            if(annotation.children.type === "image") break;
+            if(annotation.children.type === InlineType.Image) break;
             annotation.children = undefined;
+            break;
     }
 }
 

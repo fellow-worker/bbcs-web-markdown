@@ -1,8 +1,9 @@
-import { Annotation, head } from "../../../util/inline";
-import { replaceAt } from "../../../util/string";
-import { Alignment, getAttributes } from "../../../util/attributes";
+import { head } from "@/util/inline/annotations";
+import { replaceAt } from "@/util/string";
+import { getAttributes } from "@/util/inline/attributes";
 import { TagProps } from "./TagProps";
-import { CSSProperties } from "styled-components";
+import * as Base from '@/components/Base'
+import { Annotation } from "@/types";
 
 export const Image = (props : TagProps) => {
     const { text, active } = props;
@@ -14,11 +15,15 @@ export const Image = (props : TagProps) => {
     if(attr === null) return null;
     const attributes = getAttributes(attr[0].substr(1, attr[0].length -2));
 
-    const className = attributes.align !== Alignment.None ? attributes.align : "";
-    const style = {} as CSSProperties;
-
-    style.width = attributes.width ? attributes.width + "%" : "100%";
-    return <img style={style} className={className} alt={altText} title={attributes.title} src={attributes.url} />
+    return (
+        <Base.Image
+            align={attributes.align}
+            width={attributes.width}
+            src={attributes.url}
+            alt={altText}
+            title={attributes.title}
+        />
+    );
 }
 
 const getInfo = (text : string, annotation : Annotation) => {
@@ -32,4 +37,3 @@ const getInfo = (text : string, annotation : Annotation) => {
 
     return info;
 }
-
