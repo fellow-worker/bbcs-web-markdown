@@ -1,5 +1,5 @@
-import { Annotation, Parser, InlineType } from "@/types";
-import { parsers as all } from "./parsers";
+import { Annotation, Parser } from "@/types";
+import { parsers as all, getParser } from "./parsers";
 import { parse  } from '../verse/parser'
 
 export const annotate = (text : string, parsers? : Parser[]) => {
@@ -23,7 +23,11 @@ export function getAnnotations(text : string, parsers : Parser[]) : [string, Ann
                 if(match.index === undefined) break;
 
                 const replace = replaceMatch(text, index + match.index, match[0].length, parser);
-                result.push({ type : parser.type, index : index + match.index , length: replace[1]  })
+
+                const annotation = { type : parser.type, index : index + match.index, length : replace[1] } as Annotation
+                annotation.type = parser.type;
+
+                result.push(annotation)
                 text = replace[0]
 
                 index = index + match.index + replace[1];
@@ -50,61 +54,37 @@ export const merge = (annotations : Annotation[]) => {
 
     const linked = new Set<Annotation>();
 
-    annotations.forEach(annotation => {
-        const closets = getClosestAnnotation(annotation, annotations);
-        if(!closets) return;
-        closets.children = annotation;
-        linked.add(annotation);
+    annotations.forEach(outer => {
+        // Get all the possible children for this annotation
+        const children = annotations.filter(inner => isInnerAnnotation(outer, inner));
+        if(children.length === 0) return;
+
+        // ensure they are added in the set so they not will be come a root annotation
+        children.forEach(child => { linked.add(child); });
+
+        // Only add the children which are valid
+        const valid = children.filter(inner => isValidChild(outer, inner));
+        if(valid.length === 0) return;
+        outer.children = valid;
+
     });
 
-    // annotations.forEach(a => { clean(a)});
-    console.log("t", JSON.parse(JSON.stringify(annotations)));
     const root = annotations.filter(a => !linked.has(a));
     return root;
 }
 
-const clean = (annotation : Annotation) => {
-    switch (annotation.type) {
-        case InlineType.SubScript:
-        case InlineType.SuperScript:
-        case InlineType.Image:
-        case InlineType.Reference:
-            annotation.children = undefined;
-            break;
-        case InlineType.Link:
-            if(!annotation.children) break;
-            if(annotation.children.type === InlineType.Image) break;
-            annotation.children = undefined;
-            break;
-    }
+const isValidChild = (parent: Annotation, child : Annotation) => {
+    const parser = getParser(parent.type);
+    return parser?.children.includes(child.type) === true;
 }
 
-const getClosestAnnotation = (annotation: Annotation,  annotations : Annotation[]) => {
+const isInnerAnnotation = (outer: Annotation, inner : Annotation) => {
+    if(outer === inner) return false;
 
-    let closets = null as Annotation | null;
-
-    annotations.sort(a => a.index).forEach(inspected => {
-        if(!isSurrounded(annotation, inspected)) return;
-
-        if(!closets) closets = inspected;
-        else if(isSurrounded(inspected, closets)) closets = inspected;
-    });
-
-    return closets;
+    if(inner.index <= outer.index) return false;
+    return (outer.index + outer.length) > (inner.index + inner.length);
 }
 
-const isSurrounded = (annotation: Annotation, inspected : Annotation) =>{
-    if(inspected.index >= annotation.index) return false;
-    return (inspected.index + inspected.length) > (annotation.index + annotation.length);
-}
-
-export const head = (text : string, annotation : Annotation) => {
-    if(!annotation.children) return text.substr(annotation.index, annotation.length)
-    return text.substr(annotation.index, annotation.children.index - annotation.index);
-}
-
-export const tail = (text : string, annotation : Annotation) => {
-    if(!annotation.children) return "";
-    const start = annotation.children.index + annotation.children.length;
-    return text.substr(start, annotation.length - annotation.children.length);
+export const getText = (text : string, annotation : Annotation) => {
+    return text.substr(annotation.index, annotation.length)
 }

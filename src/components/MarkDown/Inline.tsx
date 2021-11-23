@@ -20,5 +20,5 @@ export const Inline = (props : InlineProps) => {
 const Text = (props : InlineProps) => {
     const { text } = props;
     const annotations = annotate(text);
-    return <Line {...props} annotations={annotations} index={0} text={text} />
+    return <Line {...props} annotations={annotations} start={0} end={text.length} text={text} />
 }

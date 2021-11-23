@@ -1,4 +1,4 @@
-import { head } from "@/util/inline/annotations";
+import { getText } from "@/util/inline/annotations";
 import { replaceAt } from "@/util/string";
 import { getAttributes } from "@/util/inline/attributes";
 import { TagProps } from "./TagProps";
@@ -27,7 +27,7 @@ export const Image = (props : TagProps) => {
 }
 
 const getInfo = (text : string, annotation : Annotation) => {
-    let info = head(text, annotation);
+    let info = getText(text, annotation);
     if(!info.includes('§')) return info;
 
     info = replaceAt(info, info.indexOf('§'), '[');

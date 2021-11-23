@@ -32,6 +32,8 @@ export const Block = (props: BlockProps) => {
             return <Blocks.Footnote {...props} block={block} />;
         case BlockType.Clear:
             return <Base.Clear />;
+        case BlockType.Table:
+            return <Blocks.Table {...props} block={block} />;
         default:
             return <Blocks.Paragraph {...props} block={block} />;
     }

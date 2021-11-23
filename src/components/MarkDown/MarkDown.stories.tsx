@@ -25,6 +25,11 @@ const Styled = styled.div`
   -webkit-font-smoothing: antialiased;
   letter-spacing: .1px;
   line-height: 21px;
+  color: #333333;
+
+  ul, ol {
+    padding-inline-start: 20px;
+  }
 
   code {
     padding:2px;
@@ -47,5 +52,22 @@ const Styled = styled.div`
   span.verse {
     color : #154879;
     cursor: pointer;
+  }
+
+  table {
+    border : 1px solid rgba(0, 0, 0, 0.1);
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 14px 0;
+
+    tr.header td {
+      background-color: #154879;
+      color:white
+    }
+
+    td {
+      padding: 2px 6px;
+      border : 1px solid rgba(0, 0, 0, 0.1);
+    }
   }
 `

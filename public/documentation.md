@@ -29,11 +29,36 @@ Om paragraven te kunnen kan er een speciaal commando aan het begin worden gegeve
 
 ## Nadruk
 
-Om nadruk te leggen binnen een tekst kunnen **asteriks** worden gebruikt, gebruik: `**vet**` of `*cursief*`.
+Om nadruk te leggen binnen een tekst kunnen **asteriks** worden gebruikt, gebruik: `**vet**` of `*cursief*`. Dit zorgt er voor dat de tekst respectievelijk **vet** of *cursief* word. **vet** en *cursief* zijn ook samen gebruik voor nog meer ***nadruk***.
 
-Dit zorgt er voor dat de tekst respectievelijk **vet** of *cursief* word.
+Naast het gebruik van asteriks is het ook mogelijk om liggende streepjes te gebruiken voor __vet__ en _cursief_: `__vet__` of `_cursief_`. Hoewel het aanbevolen is alleen de asteriks te gebruiken vanwege compabiliteit, kunnen underscores wel gebruikt worden om *binnen cursief slecht alleen een deel __vet__ te markeren* or **binnen vet alleen een deel _cursief_ te markeren**
 
-**vet** en *cursief* zijn ook samen gebruik voor nog meer ***nadruk***.
+## Lijsten
+
+Het is eenvoudig om lijstjes in het document te gebruiken. Een ongenummerde lijst is niets anders dan een blok waarvan elke regel begint met een -. Voor genummerde lijstje nummer ze met 1. , 2. , 3. etc.. Een sublijstje maken kan eenvoudig door in te springen met 3 spaties.
+
+#### Voorbeeld
+
+De meeste lessen bestaan uit de volgende indeling:
+
+- De tekst uit het boek Seksuele Afgoderij
+- Getuigenis met een vraag
+- Video deel (Het zijn twee lezingen per hoofdstuk)
+   - deel 1 met vragen
+   - deel 2 met vragen
+- Persoonlijke vragen
+
+Als christelijke kerk hebben we onze feestdagen. Soms hebben deze dagen een ernstig karakter, soms een vreugdevol. In het Oude Testament kende men ook feestdagen. Israël had zeven hoogtijdagen. Zij worden allemaal genoemd in leviticus 23. Dit zijn de gezette hoogtijden van de Heere; niet van de Joden, maar van de Heere! ‘Mijn feestdagen’, zegt de Heere.
+
+1. Pascha (werd gevierd in Jeruzalem)
+2. Feest van de ongezuurde broden
+3. Eerstelinggarven
+4. Wekenfeest (werd gevierd in Jeruzalem)
+5. Nieuwjaarsdag (het zgn. Feest van het geklank)
+6. Grote Verzoendag
+   1. Deel 1
+   2. Deel 2
+7. Loofhuttenfeest (werd gevierd in Jeruzalem)
 
 ## Quote
 
@@ -215,7 +240,38 @@ In deze cursus bestuderen we wat de Bijbel zegt over Jezus.
 
 ## Tabellen
 
+Om eem tabel toe te voegen, gebruik 3 of meer streepjes (---) om voor elke kolom een kop te maken en maak gebruik van pipes (|) om kolommen te maken. Voor compabilitiet sluit een kolom weer af met een pipe.
+
 | Syntax      | Description |
 | ----------- | ----------- |
 | Header      | Title       |
 | Paragraph   | Text        |
+
+De cell breedte is variable, zoals getoond hier onder, maar hoe het er uit ziet blijft gelijk.
+
+| Syntax | Description |
+| --- | ----------- |
+| Header | Title |
+| Paragraph | Text |
+
+Om dat het werken met tabellen soms omslachtig kan zijn, is er een tabellen generator beschikbaar in editor.
+
+### Uitlijnen
+
+Je kunt de tekst in een kolom, links, recht of in het midden uitlijnen door een dubbele punt toe voegen (:) aan de linker, rechter on beide zijdes van de streepjes in de kop regel.
+
+| Syntax      | Description | Test Text     |
+| :---        |    :----:   |          ---: |
+| Header      | Title       | Here's this   |
+| Paragraph   | Text        | And more      |
+
+
+### Volledige kop
+
+Tot slot is het mogelijk om kop de volledige breedte van table te laten gebruiken door voor de kop slechts 1 kolom te gebruiken
+
+| Hebreuwse titel                      |
+| :------: | :----------: | :--------: |
+| Algemeen | Omschrijvend | Specifiek  |
+| Elhomin  | Adonai       | Jahweh     |
+| 2250     | 340          | 6832       |

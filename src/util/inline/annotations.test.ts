@@ -5,8 +5,8 @@ import { Annotation, InlineType } from "@/types";
 
 describe("getAnnotations", () => {
     const params = {
-        bold: { text: "**bold**", ...parsers.bold, expected: "§§bold§§" },
-        italic: { text: "*italic*", ...parsers.italic, expected: "*italic*" },
+        bold: { text: "**bold**", parser: parsers.bold, expected: "§§bold§§" },
+        italic: { text: "*italic*", parser: parsers.italic, expected: "*italic*" },
     };
 
     test("bold", () => {
@@ -123,7 +123,7 @@ describe("merge", () => {
         ] as Annotation[];
 
         const expected = { ...annotations[0] };
-        expected.children = annotations[1];
+        expected.children = [ {...annotations[1]} ];
 
         // Act
         const merged = merge(annotations);
@@ -140,7 +140,7 @@ describe("merge", () => {
         ] as Annotation[];
 
         const expected = { ...annotations[1] };
-        expected.children = annotations[0];
+        expected.children = [ {...annotations[0]} ];
 
         // Act
         const merged = merge(annotations);

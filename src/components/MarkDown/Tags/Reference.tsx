@@ -1,11 +1,11 @@
-import { head } from "@/util/inline/annotations";
+import { getText } from "@/util/inline/annotations";
 import { TagProps } from "./TagProps";
 import * as Base from '@/components/Base'
 
 export const Reference = ( props : TagProps ) => {
     const { text, active, document } = props;
 
-    let label = head(text, active);
+    let label = getText(text, active);
     label = label.substr(2, label.indexOf(']') - 2);
 
     const ref = document.footnotes.findIndex(text => text === label) + 1;

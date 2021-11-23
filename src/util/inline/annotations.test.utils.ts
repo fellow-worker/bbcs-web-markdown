@@ -14,7 +14,8 @@ const single = (expected? : Annotation, actual? : Annotation ) => {
     expect(actual.index).toBe(expected.index);
     expect(actual.length).toBe(expected.length);
     expect(actual.type).toBe(expected.type);
-    single(actual.children, expected.children);
+    if(!expected.children || !actual.children) expect(actual.children).toBeUndefined();
+    else assert(actual.children, expected.children);
 }
 
 export const run = (text : string, output : string, expected : Annotation[], parsers? : Parser[]) => {
@@ -29,7 +30,10 @@ export const run = (text : string, output : string, expected : Annotation[], par
     assert(expected, annotations);
 }
 
-type TestParams = Parser & { text : string, expected : string }
+type TestParams = { text : string, expected : string, parser : Parser }
 export const runParams = (params : TestParams) => {
-    run(params.text, params.expected, [{...params, index : 0, length : params.text.length}  ], [ params ])
+
+    const annotations = [{ index : 0, length : params.text.length, type : params.parser.type }] as Annotation[]
+
+    run(params.text, params.expected, annotations, [ params.parser ])
 }

@@ -1,17 +1,25 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useRef } from "react";
 import styled, { css } from "styled-components";
 
 type TextEditorProps = {
     value : string
     onChange? : (value : string) => void
+    onCursorMove? : (position : { start : number, end : number }) => void;
 }
 
 export const TextEditor = (props : TextEditorProps) => {
-    const { value } = props;
+    const { value, onCursorMove} = props;
+    const ref = useRef<HTMLTextAreaElement>(null);
 
+    const onHandleSelection = () => {
+        if(!onCursorMove || !ref.current) return;
+        const position = { start: ref.current.selectionStart, end: ref.current.selectionEnd };
+        onCursorMove(position);
+    }
 
     const onChange = (event : ChangeEvent<HTMLTextAreaElement>) => {
         if(props.onChange) props.onChange(event.target.value);
+        onHandleSelection();
     }
 
     return (
@@ -20,6 +28,9 @@ export const TextEditor = (props : TextEditorProps) => {
             <TextArea
                 value={value}
                 onChange={onChange}
+                onKeyUp={onHandleSelection}
+                onClick={onHandleSelection}
+                ref={ref}
             />
         </Panel>
     )

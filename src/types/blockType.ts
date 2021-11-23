@@ -8,5 +8,6 @@ export enum BlockType {
     HorizontalLine = 'horizontalLine',
     Clear = 'Clear',
     Paragraph =  'paragraph',
-    Footnote =  'footnote'
+    Footnote =  'footnote',
+    Table = 'table'
 }

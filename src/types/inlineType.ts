@@ -7,5 +7,6 @@ export enum InlineType {
     SuperScript = "superscript",
     SubScript = "subscript",
     Reference = "reference",
-    Verse = 'verse'
+    Verse = 'verse',
+    None = 'none'
 }

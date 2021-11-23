@@ -1,12 +1,11 @@
-import { head } from "@/util/inline/annotations";
 import { TagProps } from "./TagProps";
 import * as Base from '@/components/Base'
+import { getText } from "@/util/inline/annotations";
 
 export const Code = (props : TagProps) => {
     const { text, active } = props;
 
-    active.children = undefined;
-    let code = head(text, active);
+    let code = getText(text, active);
     const first = code[0];
     code = code.substr(2, code.length - 3).replace("\\`","`");
 

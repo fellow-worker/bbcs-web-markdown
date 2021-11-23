@@ -3,30 +3,32 @@ import { Tag } from './Tag'
 
 type LineProps = {
     text : string,
-    index : number,
-    annotations : Annotation[],
+    start : number,
+    annotations? : Annotation[],
     document : Document
     onVerseClick : (ref : string) => any;
+    end : number;
 }
 
 export const Line = (props : LineProps) => {
-    const { text, index, annotations } = props;
-    if(index >= text.length) return null;
+    const { text, start, end, annotations } = props;
+    if(end >= text.length) return null;
 
-    const next = getNextAnnotation(index, annotations);
-    if(next === null) return <>{text.substr(index)}</>;
+    // No annotation? Add the remainder of the text
+    const next = getNextAnnotation(start, annotations);
+    if(next === null) return <>{text.substring(start, end)}</>;
 
     return (
         <>
-            {text.substr(index, next.index - index)}
-            <Tag {...props}  active={next} text={text} />
-            <Line {...props} index={next.index + next.length} text={text} annotations={annotations} />
+            {text.substring(start, next.index)}
+            <Tag {...props} active={next} text={text} />
+            <Line {...props} start={next.index + next.length} />
         </>
     );
 }
 
-const getNextAnnotation = (index : number, annotations : Annotation[]) => {
-
+const getNextAnnotation = (index : number, annotations? : Annotation[]) => {
+    if(!annotations) return null;
     let next = null as Annotation | null;
     annotations.forEach(a => {
         if(index > a.index) return;

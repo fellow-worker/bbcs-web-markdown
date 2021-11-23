@@ -71,6 +71,7 @@ const getBlockType = (text : string, hasParent : boolean) => {
     if(!hasParent && isHorizontalLine(text)) return BlockType.HorizontalLine;
     if(isClear(text)) return BlockType.Clear;
     if(isFootnote(text)) return BlockType.Footnote;
+    if(isTable(text)) return BlockType.Table;
 
     return BlockType.Paragraph
 }
@@ -102,12 +103,8 @@ const isUnorderedList = (text : string) => {
            startsEveryLineWith(text,/^ *\+ /);
 }
 
-const startsEveryLineWith = (text : string, regexp : RegExp) => {
-    const lines = text.split("\n");
-    for(let index = 0; index < lines.length; index++) {
-        if(!regexp.test(lines[index])) return false;
-    }
-    return true;
+const isTable = (text : string) => {
+    return startsEveryLineWith(text,/^\|/);
 }
 
 const isCode = (text :string) => {
@@ -140,4 +137,12 @@ const getRefs = (text : string) => {
     }
 
     return labels;
+}
+
+const startsEveryLineWith = (text : string, regexp : RegExp) => {
+    const lines = text.split("\n");
+    for(let index = 0; index < lines.length; index++) {
+        if(!regexp.test(lines[index])) return false;
+    }
+    return true;
 }

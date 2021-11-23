@@ -4,5 +4,5 @@ export type Annotation = {
     type: InlineType;
     index: number;
     length: number;
-    children?: Annotation;
+    children?: Annotation[];
 };

@@ -1,28 +1,39 @@
-import { head, tail } from "@/util/inline/annotations";
 import { getAttributes } from "@/util/inline/attributes";
-import { Tag } from "./Tag";
 import { TagProps } from "./TagProps";
 import { LinkType } from "@/types";
 import { Video } from './Video'
 import * as Base from '@/components/Base'
+import { getText } from "@/util/inline/annotations";
+import { Line } from "./Line";
 
 export const Link = (props : TagProps) => {
-    const { text, active } = props;
+    const { active } = props;
+    const text = getText(props.text, active);
 
-    console.log(active);
-
-    const info = active.children ? tail(text,active) : head(text, active);
-    const linkText = info.substr(1, info.indexOf("]") - 1);
-    const link = active.children ? <Tag {...props} text={text} active={active.children} /> : linkText;
-
-    const attr = info.match(/\([^\n]+\)/);
+    const attr = text.substring(text.lastIndexOf('(') + 1, text.length - 1);
 
     if(attr === null) return null;
-    const attributes = getAttributes(attr[0].substr(1, attr[0].length -2));
+    const attributes = getAttributes(attr);
 
     if(attributes.type === LinkType.Video) return <Video {...attributes} />
 
     const href = attributes.url ? attributes.url : "#" + attributes.headingId;
     const target = attributes.blank ? true : false;
-    return <Base.Hyperlink blank={target} title={attributes.title} href={href}>{link}</Base.Hyperlink>
+    return (
+        <Base.Hyperlink blank={target} title={attributes.title} href={href}>
+            <Content {...props} />
+        </Base.Hyperlink>
+    );
+}
+
+const Content = (props : TagProps) => {
+    const { active } = props;
+    const text = getText(props.text, active);
+
+    if(!active.children) return <>{text.substr(1, text.indexOf("]") - 1)}</>
+
+    const start = active.children[0].index;
+    const end = active.children[0].index + active.children[0].length
+
+    return <Line {...props} start={start} end={end} annotations={active.children}   />
 }
