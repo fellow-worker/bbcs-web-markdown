@@ -39,8 +39,8 @@ jobs:
         with:
           dir: docs
           branch: docs
-          repo: fellow-worker/bbcs-icons-docs
-          token: ${{ secrets.ACCESS_TOKEN }}
+          repo: fellow-worker/bbcs-web-markdown
+          token: ${{ secrets.PAGES_TOKEN }}
 
       - name: Build library 🔧
         run: yarn run build-typescript
