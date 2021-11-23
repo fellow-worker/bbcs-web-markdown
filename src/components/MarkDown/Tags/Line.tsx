@@ -12,7 +12,7 @@ type LineProps = {
 
 export const Line = (props : LineProps) => {
     const { text, start, end, annotations } = props;
-    if(end >= text.length) return null;
+    if(end > text.length) return null;
 
     // No annotation? Add the remainder of the text
     const next = getNextAnnotation(start, annotations);
