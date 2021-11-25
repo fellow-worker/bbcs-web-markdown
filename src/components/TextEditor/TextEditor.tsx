@@ -1,19 +1,18 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useRef } from "react";
 import styled, { css } from "styled-components";
 import { Highlighter } from './Syntax/Highlighter'
 
 export type TextEditorProps = {
     value : string
-    onChange? : (value : string) => void
+    onChange : (value : string) => void
     onCursorMove? : (position : { start : number, end : number }) => void;
     highlighted? : boolean;
     font? : 'Noto Sans Mono' | 'Roboto Mono' | 'JetBrains Mono';
 }
 
 export const TextEditor = (props : TextEditorProps) => {
-    const { onCursorMove, highlighted } = props;
+    const { onCursorMove, highlighted, value } = props;
     const ref = useRef<HTMLTextAreaElement>(null);
-    const [ value, setValue ] = useState(props.value);
 
     const onHandleSelection = () => {
         if(!onCursorMove || !ref.current) return;
@@ -21,9 +20,8 @@ export const TextEditor = (props : TextEditorProps) => {
         onCursorMove(position);
     }
 
-    const onChange = (event : ChangeEvent<HTMLTextAreaElement>) => {
-        if(props.onChange) props.onChange(event.target.value);
-        else setValue(event.target.value);
+    const onValueChange = (event : ChangeEvent<HTMLTextAreaElement>) => {
+        props.onChange(event.target.value);
         onHandleSelection();
     }
 
@@ -31,11 +29,11 @@ export const TextEditor = (props : TextEditorProps) => {
 
     return (
         <Panel>
-            <Highlighter font={font} enabled={highlighted} text={value} styled={style} />
+            <Highlighter font={font} enabled={highlighted} text={value + "\n"} styled={style} />
             <TextArea
                 spellCheck={false}
                 value={value}
-                onChange={onChange}
+                onChange={onValueChange}
                 onKeyUp={onHandleSelection}
                 onClick={onHandleSelection}
                 ref={ref}

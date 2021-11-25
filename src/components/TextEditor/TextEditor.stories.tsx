@@ -2,6 +2,7 @@ import { TextEditor } from './TextEditor'
 
 import { Story, Meta } from '@storybook/react';
 import pkg from '../../../package.json'
+import { useState } from 'react';
 
 type EditorProps = {
   highlighted? : boolean,
@@ -12,7 +13,8 @@ type EditorProps = {
 
 const Editor = (props : EditorProps ) => {
 
-  const { highlighted, value, font } = props;
+  const { highlighted, font } = props;
+  const [ value, setValue ] = useState(props.value);
 
   return (
     <div style={{border: "1px solid #dddddd", boxSizing : "border-box" }}>
@@ -20,7 +22,7 @@ const Editor = (props : EditorProps ) => {
         @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@300&family=Roboto+Mono:wght@300&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap');
       </style>
-      <TextEditor font={font} highlighted={highlighted} value={value} />
+      <TextEditor onChange={setValue} font={font} highlighted={highlighted} value={value} />
     </div>
   )
 }
