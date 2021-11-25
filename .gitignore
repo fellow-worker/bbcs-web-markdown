@@ -5,6 +5,7 @@
 /docs
 /.pnp
 .pnp.js
+/lib
 
 # testing
 /coverage
