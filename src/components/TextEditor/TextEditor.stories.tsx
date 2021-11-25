@@ -3,13 +3,24 @@ import { TextEditor } from './TextEditor'
 import { Story, Meta } from '@storybook/react';
 import pkg from '../../../package.json'
 
+type EditorProps = {
+  highlighted? : boolean,
+  value : string,
+  font? : 'Noto Sans Mono' | 'Roboto Mono' | 'JetBrains Mono';
+}
 
-const Editor = (props : { value : string}) => {
 
+const Editor = (props : EditorProps ) => {
+
+  const { highlighted, value, font } = props;
 
   return (
     <div style={{border: "1px solid #dddddd", boxSizing : "border-box" }}>
-      <TextEditor value={props.value} />
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Mono:wght@300&family=Roboto+Mono:wght@300&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300&display=swap');
+      </style>
+      <TextEditor font={font} highlighted={highlighted} value={value} />
     </div>
   )
 }

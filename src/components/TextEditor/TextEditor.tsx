@@ -6,7 +6,8 @@ export type TextEditorProps = {
     value : string
     onChange? : (value : string) => void
     onCursorMove? : (position : { start : number, end : number }) => void;
-    highlighted? : boolean
+    highlighted? : boolean;
+    font? : 'Noto Sans Mono' | 'Roboto Mono' | 'JetBrains Mono';
 }
 
 export const TextEditor = (props : TextEditorProps) => {
@@ -26,9 +27,11 @@ export const TextEditor = (props : TextEditorProps) => {
         onHandleSelection();
     }
 
+    const font = props.font ? props.font : 'ecs-editor-font';
+
     return (
         <Panel>
-            <Highlighter enabled={highlighted} text={value} styled={style} />
+            <Highlighter font={font} enabled={highlighted} text={value} styled={style} />
             <TextArea
                 spellCheck={false}
                 value={value}
@@ -36,6 +39,7 @@ export const TextEditor = (props : TextEditorProps) => {
                 onKeyUp={onHandleSelection}
                 onClick={onHandleSelection}
                 ref={ref}
+                font={font}
             />
         </Panel>
     )
@@ -49,10 +53,8 @@ const Panel  = styled.div`
 
 const style = css`
     padding: 15px;
-    font-family: 'ecs-editor-font', 'Courier New', Courier, monospace;
     letter-spacing: 0.1px;
     box-sizing: border-box;
-    line-height: 25.844px;
     font-size: 14px;
     border:0;
     margin:0;
@@ -60,15 +62,15 @@ const style = css`
     min-height:25px;
 `
 
-
-
-const TextArea = styled.textarea`
+const TextArea = styled.textarea<{font : string }>`
     ${style}
 
     &:focus {
         outline: none;
         outline-style: none;
     }
+
+    font-family: '${p =>  p.font}', 'Courier New', Courier, monospace;
 
     &:-internal-autofill-selected {
         outline: none;

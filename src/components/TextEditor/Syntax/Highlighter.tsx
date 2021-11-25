@@ -1,20 +1,22 @@
 import styled, { FlattenSimpleInterpolation } from "styled-components";
 
-export const Highlighter = (props : { text? : string, enabled? : boolean, styled : FlattenSimpleInterpolation }) => {
+export const Highlighter = (props : { text? : string, enabled? : boolean, styled : FlattenSimpleInterpolation, font : string }) => {
 
-    const { text, styled, enabled } = props;
+    const { text, styled, enabled, font } = props;
     const html = getHtml(text, enabled);
 
     return (
-        <AutoGrow spellCheck={false} styled={styled} dangerouslySetInnerHTML={{__html:html}} />
+        <AutoGrow font={font} spellCheck={false} styled={styled} dangerouslySetInnerHTML={{__html:html}} />
     )
 }
 
-const AutoGrow = styled.div<{styled : FlattenSimpleInterpolation}>`
+const AutoGrow = styled.div<{styled : FlattenSimpleInterpolation, font : string}>`
 
     ${p => p.styled};
     width: 100%;
     height: 100%;
+
+    font-family: '${p =>  p.font}', 'Courier New', Courier, monospace;
 
     span.header { color : #154879; }
     span.bold { color: #154879; }
@@ -29,7 +31,7 @@ const AutoGrow = styled.div<{styled : FlattenSimpleInterpolation}>`
 
 const getHtml = (text? : string, enabled? : boolean) => {
     if(!text) return "";
-    if(!!enabled) return text;
+    if(enabled === false) return text;
 
     text = headers(text);
     text = images(text);
@@ -65,8 +67,8 @@ const alignments = (text : string) => {
 }
 
 const headers = (text : string) => {
-    const regexp = /^#{1,6} .+\n\n/gm;
-    return setClassWithSubstr(text, [ regexp ], "header",0,1);
+    const regexp = [ /^#{1,6} .+\n\n/gm , /^.+$\n-{3,}\n\n/gm, /^.+$\n={3,}\n\n/gm ]
+    return setClassWithSubstr(text, regexp, "header",0,1);
 }
 
 const emphasis = (text : string) => {
