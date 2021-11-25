@@ -1,6 +1,6 @@
 import { Line } from "./Line";
 import { TagProps } from "./TagProps";
-import * as Base from '@/components/Base'
+import * as Base from 'components/Base'
 
 export const SubScript = (props : TagProps) => {
     const { active, text } = props;

@@ -1,4 +1,4 @@
-import { BlockType, Document, Block } from "@/types";
+import { BlockType, Document, Block } from "types";
 
 const indent = "    ";
 

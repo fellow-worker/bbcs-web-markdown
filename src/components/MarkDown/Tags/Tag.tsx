@@ -1,4 +1,4 @@
-import { InlineType } from "@/types";
+import { InlineType } from "types";
 import * as Tags from './index'
 import { TagProps } from './TagProps'
 

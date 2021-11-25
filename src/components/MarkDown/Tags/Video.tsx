@@ -1,6 +1,6 @@
-import { getYouTubeId } from "@/util/inline/youtube";
-import { getVimeoVideoId } from '@/util/inline/vimeo';
-import * as Base from '@/components/Base'
+import { getYouTubeId } from "util/inline/youtube";
+import { getVimeoVideoId } from 'util/inline/vimeo';
+import * as Base from 'components/Base'
 
 export const Video = (props : { url? : string }) => {
     const { url } = props;

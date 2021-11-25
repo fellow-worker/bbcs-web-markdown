@@ -1,6 +1,6 @@
-import { getText } from "@/util/inline/annotations";
+import { getText } from "util/inline/annotations";
 import { TagProps } from "./TagProps";
-import * as Base from '@/components/Base'
+import * as Base from 'components/Base'
 
 export const Reference = ( props : TagProps ) => {
     const { text, active, document } = props;

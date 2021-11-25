@@ -1,4 +1,4 @@
-import { Document, ListItem } from '@/types'
+import { Document, ListItem } from 'types'
 
 export type ListProps = {
     document : Document,

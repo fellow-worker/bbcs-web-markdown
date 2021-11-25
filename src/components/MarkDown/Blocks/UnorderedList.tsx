@@ -1,9 +1,9 @@
 import { BlockProps } from './BlockProps'
-import { clearLineUnorderedList, parse } from "@/util/block/list";
+import { clearLineUnorderedList, parse } from "util/block/list";
 import { Inline } from "../Inline";
 import { ListProps } from './ListProps'
 import { ItemProps } from './ItemProps'
-import * as Base from '@/components/Base'
+import * as Base from 'components/Base'
 
 export const UnorderedList = (props : BlockProps) => {
     const text = props.block.text;

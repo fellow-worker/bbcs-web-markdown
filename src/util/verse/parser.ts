@@ -1,6 +1,6 @@
 import { chapters } from './chapters'
 import { books } from './books'
-import { Book, VerseReference, InlineType } from '@/types'
+import { Book, VerseReference, InlineType } from 'types'
 
 // a regexp to test for chapter:verse
 const regChapterVerse = new RegExp("^[1-9]{1}[0-9]*[:]{1}[1-9]{1}[0-9]*$");

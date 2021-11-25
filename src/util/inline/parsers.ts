@@ -1,4 +1,4 @@
-import { InlineType, Parser } from '@/types'
+import { InlineType, Parser } from 'types'
 import { replaceAt } from '../string'
 
 const all = [

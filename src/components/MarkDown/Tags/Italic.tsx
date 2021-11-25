@@ -1,5 +1,5 @@
 import { TagProps } from "./TagProps";
-import * as Base from '@/components/Base'
+import * as Base from 'components/Base'
 import { Line } from "./Line";
 
 export const Italic = (props : TagProps) => {

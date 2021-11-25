@@ -1,4 +1,4 @@
-import { ListItem } from "@/types";
+import { ListItem } from "types";
 
 export const parse = (text : string, clearLine : (text : string) => string) => {
 

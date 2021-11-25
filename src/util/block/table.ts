@@ -1,4 +1,4 @@
-import { Alignment, Table } from "@/types"
+import { Alignment, Table } from "types"
 
 const tempChar = "¥%$¥";
 

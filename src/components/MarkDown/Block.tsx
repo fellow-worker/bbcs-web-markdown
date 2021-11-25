@@ -1,6 +1,6 @@
 import * as Blocks from "./Blocks";
-import { Block as Type, BlockType, Document } from "@/types";
-import * as Base from '@/components/Base'
+import { Block as Type, BlockType, Document } from "types";
+import * as Base from '../Base'
 
 export type BlockProps = {
     block: Type;

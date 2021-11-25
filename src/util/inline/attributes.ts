@@ -1,4 +1,4 @@
-import { Alignment, LinkType } from "@/types";
+import { Alignment, LinkType } from "types";
 
 export const getAttributes = (info : string) => {
 

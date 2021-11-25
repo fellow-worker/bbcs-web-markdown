@@ -1,5 +1,5 @@
 import { BlockProps } from './BlockProps'
-import * as Base from '@/components/Base'
+import * as Base from 'components/Base'
 
 export const Code = (props : BlockProps) => {
     const { block } = props;

@@ -1,4 +1,4 @@
-import { Annotation, Parser } from '@/types';
+import { Annotation, Parser } from 'types';
 import { getAnnotations } from './annotations'
 import { parsers as all } from './parsers';
 
