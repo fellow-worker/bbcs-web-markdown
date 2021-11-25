@@ -1,9 +1,9 @@
-import { getAttributes } from "util/inline/attributes";
+import { getAttributes } from "../../../util/inline/attributes";
 import { TagProps } from "./TagProps";
-import { LinkType } from "types";
+import { LinkType } from "../../../types";
 import { Video } from './Video'
-import * as Base from 'components/Base'
-import { getText } from "util/inline/annotations";
+import * as Base from '../../Base'
+import { getText } from "../../../util/inline/annotations";
 import { Line } from "./Line";
 
 export const Link = (props : TagProps) => {

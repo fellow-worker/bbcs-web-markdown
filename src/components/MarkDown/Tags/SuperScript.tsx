@@ -1,6 +1,6 @@
 import { Line } from "./Line";
 import { TagProps } from "./TagProps";
-import * as Base from 'components/Base'
+import * as Base from '../../Base'
 
 export const SuperScript = (props : TagProps) => {
     const { active, text } = props;

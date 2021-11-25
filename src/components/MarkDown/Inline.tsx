@@ -1,6 +1,6 @@
 import { annotate } from '../../util/inline/annotations';
 import { Line } from './Tags/Line'
-import { Document } from 'types'
+import { Document } from '../../types'
 
 type InlineProps = {
     text : string;

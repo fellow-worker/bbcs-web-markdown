@@ -1,7 +1,7 @@
 import { Inline } from "../Inline";
 import { BlockProps } from './BlockProps'
-import * as Base from 'components/Base'
-import { getText } from 'util/block/header'
+import * as Base from '../../Base'
+import { getText } from '../../../util/block/header'
 
 export const Header = (props : BlockProps) => {
     const { block } = props;

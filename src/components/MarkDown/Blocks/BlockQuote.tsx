@@ -1,6 +1,6 @@
 import { MarkDownBase } from "../MarkDown";
 import { BlockProps } from './BlockProps'
-import * as Base from 'components/Base'
+import * as Base from '../../Base'
 
 export const BlockQuote = (props : BlockProps) => {
     const { block, onVerseClick } = props;

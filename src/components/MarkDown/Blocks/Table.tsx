@@ -1,8 +1,8 @@
 import { parseTable } from '../../../util/block/table';
 import { BlockProps } from './BlockProps'
-import * as Base from 'components/Base'
+import * as Base from '../../Base'
 import { Inline } from '../Inline';
-import { Alignment, Table as Type } from 'types';
+import { Alignment, Table as Type } from '../../../types';
 
 export const Table = (props : BlockProps) => {
     const { block } = props;

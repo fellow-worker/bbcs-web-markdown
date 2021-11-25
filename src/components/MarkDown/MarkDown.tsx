@@ -1,4 +1,4 @@
-import { Document } from "types";
+import { Document } from "../../types";
 import { parse } from '../../util/block/parser'
 import { Block } from "./Block";
 import * as Base from '../Base'

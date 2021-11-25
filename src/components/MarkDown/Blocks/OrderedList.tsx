@@ -1,9 +1,9 @@
 import { BlockProps } from './BlockProps'
-import { clearLineOrderedList, parse } from "util/block/list";
+import { clearLineOrderedList, parse } from "../../../util/block/list";
 import { Inline } from "../Inline";
 import { ListProps } from './ListProps'
 import { ItemProps } from './ItemProps'
-import * as Base from 'components/Base'
+import * as Base from '../../Base'
 
 export const OrderedList = (props : BlockProps) => {
     const text = props.block.text;

@@ -1,7 +1,7 @@
 import { BlockProps } from './BlockProps'
 import { Inline } from "../Inline"
-import { Alignment, Document } from 'types';
-import * as Base from 'components/Base'
+import { Alignment, Document } from '../../../types';
+import * as Base from '../../Base'
 
 export const Paragraph = (props : BlockProps) => {
     const { block } = props;

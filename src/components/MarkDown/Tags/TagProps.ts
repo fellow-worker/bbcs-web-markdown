@@ -1,4 +1,4 @@
-import { Annotation, Document } from 'types';
+import { Annotation, Document } from '../../../types';
 
 export type TagProps = {
   text: string;

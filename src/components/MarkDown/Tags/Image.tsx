@@ -1,9 +1,9 @@
-import { getText } from "util/inline/annotations";
-import { replaceAt } from "util/string";
-import { getAttributes } from "util/inline/attributes";
+import { getText } from "../../../util/inline/annotations";
+import { replaceAt } from "../../../util/string";
+import { getAttributes } from "../../../util/inline/attributes";
 import { TagProps } from "./TagProps";
-import * as Base from 'components/Base'
-import { Annotation } from "types";
+import * as Base from '../../Base'
+import { Annotation } from "../../../types";
 
 export const Image = (props : TagProps) => {
     const { text, active } = props;

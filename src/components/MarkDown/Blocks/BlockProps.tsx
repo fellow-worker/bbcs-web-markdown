@@ -1,4 +1,4 @@
-import { Block, Document } from "types";
+import { Block, Document } from "../../../types";
 
 export type BlockProps = {
     block : Block;

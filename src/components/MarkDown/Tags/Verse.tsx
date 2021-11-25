@@ -1,6 +1,6 @@
 import { TagProps } from "./TagProps";
-import { VerseReference } from 'types'
-import * as Base from 'components/Base'
+import { VerseReference } from '../../../types'
+import * as Base from '../../Base'
 
 export const Verse = (props : TagProps) => {
     const { text, active, onVerseClick } = props;

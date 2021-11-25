@@ -1,4 +1,4 @@
-import { Annotation, Document } from "types";
+import { Annotation, Document } from "../../../types";
 import { Tag } from './Tag'
 
 type LineProps = {

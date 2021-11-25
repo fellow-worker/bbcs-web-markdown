@@ -1,7 +1,7 @@
 import { getAnnotations,  merge } from "./annotations";
 import * as parsers from "./parsers";
 import { assert, run, runParams } from "./annotations.test.utils";
-import { Annotation, InlineType } from "types";
+import { Annotation, InlineType } from "../../types";
 
 describe("getAnnotations", () => {
     const params = {

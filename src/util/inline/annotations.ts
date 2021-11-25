@@ -1,4 +1,4 @@
-import { Annotation, Parser } from "types";
+import { Annotation, Parser } from "../../types";
 import { parsers as all, getParser } from "./parsers";
 import { parse  } from '../verse/parser'
 
