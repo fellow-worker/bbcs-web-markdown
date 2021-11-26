@@ -27,13 +27,13 @@ export const italic = {
 } as Parser
 
 export const link = {
-    regexp : [ /\[[^\n^\]?]+\]\([^\n^)?]+\)/ ],
+    regexp : [ /\[.+?\]\(.+?\)/ ],
     type : InlineType.Link,
     children : [ InlineType.Image ]
 } as Parser
 
 export const image = {
-    regexp : [ /!\[[^\n^\]?]+\]\([^\n^)?]+\)/ ],
+    regexp : [ /!\[.+?\]\(.+?\)/ ],
     intermediate : (value : string) => {
         value = replaceAt(value, value.indexOf("["), '§')
         value = replaceAt(value, value.indexOf("]"), '§')
