@@ -7,7 +7,7 @@ export const Paragraph = (props : BlockProps) => {
     const { block } = props;
 
     const alignment = getAlignment(props.block.text);
-    const className = alignment === Alignment.None ? Alignment.Left : alignment;
+    const className = alignment === Alignment.None ? Alignment.Justify : alignment;
     const lines = block.text.split("\n");
 
     return (

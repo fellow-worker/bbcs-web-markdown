@@ -2,6 +2,8 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
 
+    p { text-align: justify }
+
     p.left, td.left { text-align: left; }
     p.right, td.right { text-align: right; }
     p.center, td.center { text-align: center; }
