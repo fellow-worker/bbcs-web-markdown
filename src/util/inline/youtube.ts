@@ -5,7 +5,7 @@ const prefixes = ["https://www.", "http://www.", "https://", "http://"];
 
 export const getYouTubeUrl = (link : string) => {
     const youtubeId = getYouTubeId(link);
-    return youtubeId ?  "https:/youtu.be/" + youtubeId : undefined;
+    return youtubeId ?  "https://youtu.be/" + youtubeId : undefined;
 }
 
 export const getYouTubeId = (link : string) => {

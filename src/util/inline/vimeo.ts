@@ -26,3 +26,7 @@ export const getVimeoVideoId = (url : string | undefined) => {
 
     return url.substr(match.index);
 }
+
+export const getVimeoUrl = (link : string) => {
+    return isVimeoUrl(link) ? link : undefined;
+}
