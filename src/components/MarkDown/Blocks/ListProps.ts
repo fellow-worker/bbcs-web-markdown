@@ -5,4 +5,5 @@ export type ListProps = {
     items: ListItem[],
     level : number,
     onVerseClick : (ref : string) => any
+    start?: number
 }

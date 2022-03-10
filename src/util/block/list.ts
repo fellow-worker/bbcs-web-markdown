@@ -20,7 +20,9 @@ export const parse = (text : string, clearLine : (text : string) => string) => {
         }
     })
 
-    return items;
+    const start = getStart(lines[0]) ?? 1;
+
+    return { items, start };
 }
 
 const getParent = (items : Array<ListItem>, level : number) : ListItem => {
@@ -47,4 +49,10 @@ export const clearLineUnorderedList = (line : string) => {
     const index = text.indexOf(" ")
     if(text.length === index + 1) return "";
     return text.substring(index + 1).trim();
+}
+
+const getStart = (line : string) => {
+    const head = line.replace(/[^\d].*/, '');
+    const start = parseInt(head);
+    return Number.isNaN(start) ? null : start;
 }

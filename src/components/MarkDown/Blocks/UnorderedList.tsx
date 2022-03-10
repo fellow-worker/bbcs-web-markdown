@@ -7,7 +7,7 @@ import * as Base from '../../Base'
 
 export const UnorderedList = (props : BlockProps) => {
     const text = props.block.text;
-    const items = parse(text, clearLineUnorderedList);
+    const { items } = parse(text, clearLineUnorderedList);
     return <List {...props} items={items} level={0} />
 }
 
