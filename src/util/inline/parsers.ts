@@ -33,7 +33,7 @@ export const link = {
 } as Parser
 
 export const image = {
-    regexp : [ /!\[.+?\]\(.+?\)/ ],
+    regexp : [ /!\[.*\]\(.+?\)/ ],
     intermediate : (value : string) => {
         value = replaceAt(value, value.indexOf("["), '§')
         value = replaceAt(value, value.indexOf("]"), '§')

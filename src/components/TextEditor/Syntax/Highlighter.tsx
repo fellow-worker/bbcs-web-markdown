@@ -24,7 +24,7 @@ const AutoGrow = styled.div<{styled : FlattenSimpleInterpolation, font : string}
     span.emphasis { color:#154879 }
     span.align { color:rgb(251, 0, 7)}
     span.link { color:rgb(140, 3, 18) }
-    span.images { color:rgb(140, 3, 18) }
+    span.image { color:rgb(140, 3, 18) }
     span.notes { color:rgb(140, 3, 18) }
     span.notes { color:rgb(204, 119, 34) }
 `
@@ -57,7 +57,7 @@ const links = (text : string) => {
 }
 
 const images = (text : string) => {
-    const regexp =  [ /!\[[^\n^\]?]+\]\([^\n^)?]+\)/gm ]
+    const regexp =  [ /!\[[^\n^\]?]*\]\([^\n^)?]+\)/gm ]
     return setClass(text, regexp, "image");
 }
 

@@ -7,15 +7,14 @@ describe("getAnnotations", () => {
     const params = {
         bold: { text: "**bold**", parser: parsers.bold, expected: "§§bold§§" },
         italic: { text: "*italic*", parser: parsers.italic, expected: "*italic*" },
+        imageNoAlt: { text: "![](https://dev.img/nature_test.jpeg)", parser: parsers.image, expected: "!§§¤https://dev.img/nature_test.jpeg¤" },
+        image: { text: "![alt](https://dev.img/nature_test.jpeg)", parser: parsers.image, expected: "!§alt§¤https://dev.img/nature_test.jpeg¤" },
     };
 
-    test("bold", () => {
-        runParams(params.bold);
-    });
-
-    test("italic", () => {
-        runParams(params.bold);
-    });
+    test("bold", () => runParams(params.bold));
+    test("italic", () => runParams(params.italic));
+    test("image", () => runParams(params.image))
+    test("image - no alt", () => runParams(params.imageNoAlt))
 
     test("inner, line end", () => {
         // Arrange
@@ -112,6 +111,7 @@ describe("getAnnotations", () => {
         // Act & Assert
         run(text, output, expected);
     });
+
 });
 
 describe("merge", () => {

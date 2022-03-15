@@ -9,7 +9,7 @@ export const Image = (props : TagProps) => {
     const { text, active } = props;
     const info = getInfo(text,active);
 
-    const altText = info.substr(1, info.indexOf("§") - 1);
+    const altText = info.substring(2, info.indexOf("]") - 1);
     const attr = info.match(/\([^\n]+\)/);
 
     if(attr === null) return null;
