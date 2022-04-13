@@ -18,7 +18,7 @@ export const getVimeoVideoId = (url : string | undefined) => {
     if(!url) return undefined;
 
     prefixes.forEach(prefix => {
-        url = url?.replace(prefix, "");
+        url = url?.replace(prefix, "").replace("/description","");
     })
 
     const match = url.match(/[^a-z^0-9]/);
